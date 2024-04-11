@@ -239,7 +239,10 @@ type
 
   TCSVData = record
     vTime: Integer;
+    timestampUTC: TDateTime;
     vVoltage,vCurrent,CapacityEBC,CapacityLocal: Extended;
+    runMode: TRunMode;
+    stepNum: String;
   end;
 
   TPacket = record
@@ -501,7 +504,7 @@ type
     function DecodeCharge(Data: string): Extended;
     function DecodeTimer(Data: string): Integer;
     function EncodeTimer(Data: Integer): string;
-    procedure SaveCSVLine(var f: Text; ATime: Integer; ACurrent: Extended; AVoltage: Extended; CapacityEBC: Extended; CapacityLocal: Extended);
+    procedure SaveCSVLine(var f: TextFile; d: TCSVData);
     procedure SaveCSV(AFile: string);
     function GetHexPacketFromIni(AIniFile: TMyIniFile; ASection: string; AIdent: string; ADefault: string = ''): string;
     procedure LoadPackets;
@@ -888,13 +891,17 @@ begin
       begin
         //vTime := DecodeTimer(Copy(APacket, 15, 2));
         // AD: use time from PC
+        vTime := TSec;
         vVoltage := FLastU;
         vCurrent := FLastI;
         CapacityEBC := FCurrentCapacity[caEBC];
         CapacityLocal := FCurrentCapacity[caLocal];
+        runMode := FRunMode;
+        stepNum := GetStepNum();
+        timestampUTC := Now;
         if fLogFileIsOpen then
         begin
-          SaveCSVLine(FLogFile, TSec{vTime}, FLastI, FLastU, FCurrentCapacity[caEBC], FCurrentCapacity[caLocal]);
+          SaveCSVLine(FLogFile, FData[Length(FData) - 1]);
           Flush(FLogFile);
         end;
       end;
@@ -1103,10 +1110,14 @@ begin
   Result := Ord(Data[1])*240 + Ord(Data[2]);
 end;
 
-procedure TfrmMain.SaveCSVLine(var f: Text; ATime: Integer; ACurrent: Extended;
-  AVoltage: Extended; CapacityEBC: Extended; CapacityLocal: Extended);
+function  FormatDateTimeISO8601(a_DateTime: TDateTime): string;
 begin
-  WriteLn(f, ATime, #9, MyFloatStr(ACurrent), #9, MyFloatStr(AVoltage), #9, MyFloatStr(CapacityEBC), #9, MyFloatStr(CapacityLocal));
+  result := FormatDateTime('yyyy-mm-dd"T"hh:mm:ss', a_DateTime);
+end;
+
+procedure TfrmMain.SaveCSVLine(var f: TextFile; d: TCSVData);
+begin
+  WriteLn(f, d.vTime, ',', MyFloatStr(d.vCurrent), ',', MyFloatStr(d.vVoltage), ',', MyFloatStr(d.CapacityEBC), ',', MyFloatStr(d.CapacityLocal), ',', d.runMode, ',', FormatDateTimeISO8601(d.timestampUTC), ',', d.stepNum);
 end;
 
 
@@ -1119,7 +1130,7 @@ begin
   AssignFile(f, AFile);
   Rewrite(f);
   for I := 0 to Length(FData) - 1 do
-    SaveCSVLine(f, FData[I].vTime, FData[I].vCurrent, FData[I].vVoltage, FData[I].CapacityEBC, FData[I].CapacityLocal);
+    SaveCSVLine(f, FData[I]);
   Flush(f);
   CloseFile(f);
 end;
@@ -2101,7 +2112,7 @@ begin
        MessageDlg(cError,Format(cUnableToCreateLogFile,[fileName,err]), mtError,[mbAbort],0);
        exit;
     end;
-    writeln(FlogFile,'Time'+#9+'I'+#9+'U'+#9+'CapEBC'+#9+'CapPC');
+    writeln(FlogFile,'uptime_seconds,current,voltage,capacity_ebc_wh,capacity_local_wh,run_mode,timestamp,step_num');
     err := ioresult;
     if (err <> 0) then
     begin
