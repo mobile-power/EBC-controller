@@ -34,8 +34,6 @@ implementation
 
 {$R *.lfm}
 
-uses main;
-
 Resourcestring
   cWhatAmI  = 'A GUI Software for Linux (and Windows) to control ZTE Tech EBC series battery testers and electronic loads intailly written by %s';
   cEnhanced = 'This version %s supports the A20 as well as the A40.';

@@ -35,6 +35,8 @@ var
 
 implementation
 
+uses main;
+
 {$R *.lfm}
 
 { TfrmConnect }
@@ -114,7 +116,7 @@ begin
       ok := true;
     except
       on e:exception do
-        Application.MessageBox(pchar(e.Message),'Error',MB_ICONSTOP);
+        Application.MessageBox(pchar(e.Message),pchar(cError),MB_ICONSTOP);
     end;
   finally
     ser.free;

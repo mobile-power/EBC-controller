@@ -1,11 +1,11 @@
 object frmMain: TfrmMain
-  Left = 674
-  Height = 1012
-  Top = 114
+  Left = 197
+  Height = 698
+  Top = 146
   Width = 1723
   Anchors = []
   Caption = 'EBC_controller'
-  ClientHeight = 1012
+  ClientHeight = 698
   ClientWidth = 1723
   KeyPreview = True
   Menu = MainMenu
@@ -16,7 +16,7 @@ object frmMain: TfrmMain
   object MainStatusBar: TStatusBar
     Left = 0
     Height = 21
-    Top = 991
+    Top = 677
     Width = 1723
     Panels = <    
       item
@@ -42,18 +42,18 @@ object frmMain: TfrmMain
     AnchorSideRight.Control = RightPanel
     AnchorSideBottom.Control = MainStatusBar
     Left = 14
-    Height = 991
+    Height = 677
     Top = 0
     Width = 1410
     Anchors = [akTop, akLeft, akRight, akBottom]
-    ClientHeight = 991
+    ClientHeight = 677
     ClientWidth = 1410
     Font.Height = -13
     ParentFont = False
     TabOrder = 2
     object Chart: TChart
       Left = 1
-      Height = 741
+      Height = 427
       Top = 1
       Width = 1408
       AxisList = <      
@@ -145,7 +145,7 @@ object frmMain: TfrmMain
     object memStepLog: TStringGrid
       Left = 1
       Height = 238
-      Top = 752
+      Top = 438
       Width = 1408
       Align = alBottom
       ColCount = 8
@@ -204,7 +204,7 @@ object frmMain: TfrmMain
       Cursor = crVSplit
       Left = 1
       Height = 10
-      Top = 742
+      Top = 428
       Width = 1408
       Align = alBottom
       ResizeAnchor = akBottom
@@ -212,11 +212,11 @@ object frmMain: TfrmMain
   end
   object RightPanel: TPanel
     Left = 1424
-    Height = 991
+    Height = 677
     Top = -2
     Width = 300
     Anchors = [akTop, akRight, akBottom]
-    ClientHeight = 991
+    ClientHeight = 677
     ClientWidth = 300
     TabOrder = 1
     object gbStatus: TGroupBox
@@ -235,28 +235,28 @@ object frmMain: TfrmMain
     object pcProgram: TPageControl
       AnchorSideBottom.Control = gbSettings
       Left = 8
-      Height = 624
+      Height = 310
       Hint = 'Steps: Scripted charge and discharge  cycles'
       Top = 176
       Width = 290
-      ActivePage = tsProgram
+      ActivePage = tsConsole
       Anchors = [akTop, akLeft, akRight, akBottom]
       BorderSpacing.Right = 2
       Constraints.MaxWidth = 290
-      TabIndex = 2
+      TabIndex = 3
       TabOrder = 0
       OnChange = pcProgramChange
       object tsCharge: TTabSheet
         Hint = 'Charge - Ctrl F1'
         Caption = 'Charge'
-        ClientHeight = 591
+        ClientHeight = 277
         ClientWidth = 280
         OnEnter = tsChargeEnter
         ParentShowHint = False
         ShowHint = True
         object rgCharge: TRadioGroup
           Left = 0
-          Height = 472
+          Height = 158
           Top = 0
           Width = 280
           Align = alTop
@@ -267,7 +267,7 @@ object frmMain: TfrmMain
           ChildSizing.ShrinkVertical = crsScaleChilds
           ChildSizing.Layout = cclLeftToRightThenTopToBottom
           ChildSizing.ControlsPerLine = 1
-          ClientHeight = 470
+          ClientHeight = 138
           ClientWidth = 278
           ItemIndex = 4
           Items.Strings = (
@@ -284,7 +284,7 @@ object frmMain: TfrmMain
         object ChargePannel: TPanel
           Left = 0
           Height = 120
-          Top = 472
+          Top = 158
           Width = 280
           Anchors = [akLeft, akRight, akBottom]
           ClientHeight = 120
@@ -377,7 +377,7 @@ object frmMain: TfrmMain
       object tsDischarge: TTabSheet
         Hint = 'Discharge - Ctrl F2'
         Caption = 'Discharge'
-        ClientHeight = 591
+        ClientHeight = 277
         ClientWidth = 280
         OnEnter = tsDischargeEnter
         ParentShowHint = False
@@ -387,7 +387,7 @@ object frmMain: TfrmMain
           AnchorSideRight.Control = tsDischarge
           AnchorSideBottom.Control = DischargePanel
           Left = 0
-          Height = 520
+          Height = 206
           Top = 0
           Width = 280
           Align = alTop
@@ -399,7 +399,7 @@ object frmMain: TfrmMain
           ChildSizing.ShrinkVertical = crsScaleChilds
           ChildSizing.Layout = cclLeftToRightThenTopToBottom
           ChildSizing.ControlsPerLine = 1
-          ClientHeight = 500
+          ClientHeight = 186
           ClientWidth = 278
           ItemIndex = 0
           Items.Strings = (
@@ -415,7 +415,7 @@ object frmMain: TfrmMain
           AnchorSideBottom.Side = asrBottom
           Left = 0
           Height = 70
-          Top = 521
+          Top = 207
           Width = 280
           Anchors = [akLeft, akBottom]
           ClientHeight = 70
@@ -425,9 +425,9 @@ object frmMain: TfrmMain
           TabOrder = 1
           object lblCutoffV1: TLabel
             Left = 128
-            Height = 23
+            Height = 19
             Top = 22
-            Width = 10
+            Width = 12
             Caption = 'V'
             Font.Height = -16
             Font.Name = 'Sans'
@@ -455,7 +455,7 @@ object frmMain: TfrmMain
       object tsProgram: TTabSheet
         Hint = 'Steps - Ctrl F3'
         Caption = 'Steps'
-        ClientHeight = 591
+        ClientHeight = 277
         ClientWidth = 280
         ParentShowHint = False
         ShowHint = True
@@ -573,7 +573,7 @@ object frmMain: TfrmMain
       object tsConsole: TTabSheet
         Hint = 'Console - Ctrl F4'
         Caption = 'Console'
-        ClientHeight = 591
+        ClientHeight = 277
         ClientWidth = 280
         ParentShowHint = False
         ShowHint = True
@@ -583,7 +583,7 @@ object frmMain: TfrmMain
           AnchorSideRight.Control = tsConsole
           AnchorSideRight.Side = asrBottom
           Left = 0
-          Height = 594
+          Height = 280
           Top = 0
           Width = 280
           Anchors = [akTop, akLeft, akRight, akBottom]
@@ -603,7 +603,7 @@ object frmMain: TfrmMain
       AnchorSideBottom.Side = asrBottom
       Left = 2
       Height = 190
-      Top = 800
+      Top = 486
       Width = 295
       Anchors = [akRight, akBottom]
       BorderSpacing.Right = 2

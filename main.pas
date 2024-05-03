@@ -18,7 +18,7 @@ const
 {$else}
   cFixedFont = 'Liberation Mono';
 {$endif}
-  cVersion = '2.17';
+  cVersion = '2.18';
   cVersionStr= 'EBC Controller '+cVersion;
 
   cConnectRetries = 10;
@@ -1087,20 +1087,25 @@ end;
 function TfrmMain.DecodeCharge(Data: string): Extended;
 begin
   // AD: taken from github.com/dev-strom/esp-ebc-mqtt/blob/main/lib/commands/EbcA20.cpp
+
+  //if (source & 0x8000) {
   if (byte(Data[1]) and $80) = $80 then
   begin
     // capacity >= 10.0 Ah
+    // AD: 04/2024 this is not correct at least for the A20 and A40, may be
+    // for other chargers ?
+    {
     if byte(Data[1]) and $0E = $0E then
     begin
       // capacity >= 200.0 Ah
       //value = ((static_cast<double> ((((source >> 8) & 0x3F) * 240) + (source & 0xFF) - 0x1C00)) / 10.0);
-      result := (((byte(Data[1]) and $3F) * 240) + byte(Data[2]) - $1C00) / 10;
+      result := (((byte(Data[1]) and $3F) * 240) + byte(Data[2]) - $1C00) / 10.0;
     end else
-    begin
-        // capacity < 200.0 Ah
-        //value = ((static_cast<double> ((((source >> 8) & 0x7F) * 240) + (source & 0xFF) - 0x0800)) / 100.0);
-        result := (((byte(Data[1]) and $7F) * 240) + byte(Data[2]) - $0800) / 100;
-    end;
+    }
+    // capacity < 200.0 Ah
+    // AD: works as well for >200AH, at least for my 230AH battery
+    //value = ((static_cast<double> ((((source >> 8) & 0x7F) * 240) + (source & 0xFF) - 0x0800)) / 100.0);
+    result := (((byte(Data[1]) and $7F) * 240) + byte(Data[2]) - $0800) / 100.0;
   end else
     // capacity < 10.0 Ah
     Result := (byte(Data[1])*240 + byte(Data[2])) / 1000;
@@ -2039,7 +2044,7 @@ end;
 
 procedure TfrmMain.DoLog(AText: string);
 begin
-  if memLog.Lines.Count > 10000 then
+  if memLog.Lines.Count > 40000 then
     memLog.Lines.Delete(0);
   memLog.Lines.Add(AText);
   memLog.VertScrollBar.Position := 1000000;
@@ -2124,6 +2129,14 @@ begin
        MessageDlg(cError,Format(cUnableToCreateLogFile,[fileName,err]), mtError,[mbAbort],0);
        exit;
     end;
+    writeln(FlogFile,'Time'+#9+'I'+#9+'U'+#9+'CapEBC'+#9+'CapPC');
+    err := ioresult;
+    if (err <> 0) then
+    begin
+       MessageDlg(cError,Format(cUnableToCreateLogFile,[fileName,err]), mtError,[mbAbort],0);
+       exit;
+    end;
+
     setStatusLine(cst_LogFileName,fileName);
     fLogFileIsOpen := true;
     fLogFileName := fileName;
@@ -3009,6 +3022,8 @@ begin
   gbSettings.Height := tbxMonitor.Top + tbxMonitor.Height + 8;
 
   poGenerateLanguageSelectMenuEntries(mmm_Language, @mm_langClick);
+
+  //mm_ConnectClick(Self);
 end;
 
 

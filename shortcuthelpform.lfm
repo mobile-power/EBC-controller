@@ -1,7 +1,7 @@
 object frmShortcuts: TfrmShortcuts
   Left = 429
   Height = 240
-  Top = 502
+  Top = 501
   Width = 320
   Caption = 'Shortcut keys'
   ClientHeight = 240
