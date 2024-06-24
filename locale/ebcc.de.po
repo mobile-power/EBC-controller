@@ -627,6 +627,10 @@ msgstr "AH"
 msgid "Cutoff Capacity"
 msgstr "Endkapazität"
 
+#: tfrmmain.lblcutcap3.caption
+msgid "Cycle Number (starting at)"
+msgstr ""
+
 #: tfrmmain.lblcutenergy.caption
 msgid "Wh"
 msgstr "WH"
