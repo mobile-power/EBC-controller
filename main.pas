@@ -556,6 +556,8 @@ private
     procedure TimerOff;
     procedure setStatusLine(Element:integer; txt:string);
 
+    procedure clearTransientData();
+
     // StringGrid for step log helper routines
     procedure memStepLogClear;
     procedure memStepLogAdd (cmd : string);
@@ -2293,6 +2295,10 @@ begin
                 memStepLogAdd ('LOOP:'+IntToStr(Loop));
                 Dec(Loop); Inc(LoopCounter);
 
+                { Every 10 loops, clear the graph, to prevent memory usage growing out of control. }
+                if LoopCounter mod 10 = 0 then
+                  clearTransientData();
+
                 FProgramStep := 0;
                 edtTestVal.Value := 0.0;
 
@@ -2748,11 +2754,7 @@ begin
     btnAdjust.Enabled := True;
     tbxMonitor.Enabled := False;
     btnStop.Enabled := True;
-    SetLength(FData, 0);
-    lsCurrent.Clear;
-    lsVoltage.Clear;
-    lsInvisibleVoltage.Clear;
-    lsInvisibleCurrent.Clear;
+    clearTransientData();
     SetupChecks;
     //StartLogging;
     FSampleCounter := 0;
@@ -2779,6 +2781,16 @@ begin
     end;
   end else
     StopLogging;
+end;
+
+{ Clear some data to keep memory usage under control }
+procedure TfrmMain.clearTransientData();
+begin
+  SetLength(FData, 0);
+  lsCurrent.Clear;
+  lsVoltage.Clear;
+  lsInvisibleVoltage.Clear;
+  lsInvisibleCurrent.Clear;
 end;
 
 procedure TfrmMain.btnStopClick(Sender: TObject);
