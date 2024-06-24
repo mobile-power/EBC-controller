@@ -296,6 +296,7 @@ type
     ChartToolset1ZoomMouseWheelTool1: TZoomMouseWheelTool;
     chkCutCap: TCheckBox;
     chkCutEnergy: TCheckBox;
+    edtCycleStartNumber: TSpinEdit;
     edtDelim: TEdit;
     edtTestVal: TFloatSpinEdit;
     edtCutEnergy: TFloatSpinEdit;
@@ -312,6 +313,7 @@ type
     lblChargeV: TLabel;
     lblCells: TLabel;
     lblCutCap2: TLabel;
+    lblCutCap3: TLabel;
     lblCutEnergy2: TLabel;
     lblCutTime: TLabel;
     lblTestVal: TLabel;
@@ -391,12 +393,16 @@ type
     tsDischarge: TTabSheet;
     Serial: TLazSerial;
     procedure ConnectionWatchdogTimerTimer(Sender: TObject);
+    procedure edtCycleStartNumberChange(Sender: TObject);
     procedure edtCellsChange(Sender: TObject);
     procedure edtCellsClick(Sender: TObject);
     procedure edtCellsEditingDone(Sender: TObject);
     procedure edtCellsKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure edtCellsKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure edtCellsExit(Sender: TObject);
+    procedure edtCutCapChange(Sender: TObject);
+    procedure edtDelimChange(Sender: TObject);
+    procedure edtTestVal1Change(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure mm_AboutClick(Sender: TObject);
     procedure FinalizeLanguageSettings;
@@ -441,6 +447,8 @@ type
     procedure tsChargeEnter(Sender: TObject);
     procedure tsDischargeEnter(Sender: TObject);
     procedure fatalError(aMessage : string);
+    procedure tsProgramContextPopup(Sender: TObject; MousePos: TPoint;
+      var Handled: Boolean);
 
 
   private
@@ -715,6 +723,12 @@ procedure TfrmMain.fatalError(aMessage : string);
 begin
   Application.MessageBox(pchar(aMessage),pchar(cFatal),MB_ICONSTOP);
   Application.Terminate;
+end;
+
+procedure TfrmMain.tsProgramContextPopup(Sender: TObject; MousePos: TPoint;
+  var Handled: Boolean);
+begin
+
 end;
 
 procedure TfrmMain.SerialRec(Sender: TObject);
@@ -1717,12 +1731,18 @@ end;
 function TfrmMain.GetStepNum: string;
 var
   I: Integer;
+  loopCounter: Integer;
 begin
   Result := '';
   for I := High(FSteps) downto Low(FSteps) do
   begin
     if FSteps[I].Command = 'LOOP' then
-      Result := AlignR(IntToStr(FSteps[I].LoopCounter), 3) + ':' + Result;
+    begin
+      loopCounter := FSteps[I].LoopCounter;
+      if Length(Result) = 0 then { Increment the first step number by edtCycleStartNumber }
+        loopCounter += edtCycleStartNumber.Value;
+      Result := AlignR(IntToStr(loopCounter), 3) + ':' + Result;
+    end;
   end;
 {  if Length(Result) > 0 then
   begin
@@ -2504,6 +2524,11 @@ begin
   MessageDlg(cConnectionLost,cPacketTimeout, mtError,[mbOk],0);
 end;
 
+procedure TfrmMain.edtCycleStartNumberChange(Sender: TObject);
+begin
+  edtCycleStartNumber.Value
+end;
+
 procedure TfrmMain.mm_AutoCsvFileNameClick(Sender: TObject);
 begin
   mm_AutoCsvFileName.Checked:=not mm_AutoCsvFileName.Checked;
@@ -2829,6 +2854,21 @@ end;
 procedure TfrmMain.edtCellsExit(Sender: TObject);
 begin
     edtCellsChange(Sender)
+end;
+
+procedure TfrmMain.edtCutCapChange(Sender: TObject);
+begin
+
+end;
+
+procedure TfrmMain.edtDelimChange(Sender: TObject);
+begin
+
+end;
+
+procedure TfrmMain.edtTestVal1Change(Sender: TObject);
+begin
+
 end;
 
 procedure TfrmMain.FormKeyDown(Sender: TObject; var Key: Word;
