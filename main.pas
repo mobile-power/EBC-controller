@@ -2119,7 +2119,7 @@ begin
     if mm_AutoCsvFileName.Checked then
     begin
       // build a file name
-      fileName := FormatDateTime('YYYY-MM-DD_HHMMSS',Now) + '_C' + GetCycleNum() + 'S_' + IntToStr(FProgramStep) + '.csv';
+      fileName := FormatDateTime('YYYY-MM-DD_HHMMSS',Now) + '_C' + GetCycleNum() + '.csv';
 
       // prefix taksbar name if enabled in settings
       if frmSettings.cgSettings.Checked[cTaskbarCsvPrefix] then
@@ -2334,6 +2334,9 @@ begin
                 if LoopCounter mod 10 = 0 then
                   clearTransientData();
 
+                // MOPO change: we want one log file per cycle
+                StartLogging();
+
                 FProgramStep := 0;
                 edtTestVal.Value := 0.0;
 
@@ -2405,9 +2408,6 @@ begin
       end};
     end;
     Inc(FProgramStep);
-
-    // MOPO change: we want one log file per step of each cycle
-    StartLogging();
 
     btnSkip.Enabled := True;
     mm_skipStep.Enabled := True;
