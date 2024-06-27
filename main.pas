@@ -1752,7 +1752,7 @@ begin
     rmCharging, rmDischarging, rmDischargingCR:
       memStepLogUpdate (FCurrentCapacity[caEBC],FEnergy,FStartU,FLastU,FLastI,Now - FStepTime);
     rmWait:
-      memStepLogUpdate (FCurrentCapacity[caEBC],0,FBeginWaitVoltage,FEndWaitVoltage,0,Now - FStepTime);
+      memStepLogUpdate (0,0,FBeginWaitVoltage,FEndWaitVoltage,0,Now - FStepTime);
     rmLoop:
       memStepLogUpdate (0,0,0,0,0,Now - FStepTime);
     rmEnd:;
