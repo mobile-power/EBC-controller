@@ -821,6 +821,16 @@ begin
   end;
   FLastTime := E;
 end;
+           
+function FindLastAhReadingInMemLog(var memStepLog: TStringGrid): string;
+var row: Integer;
+begin
+    // Check from end to start, excluding the last row (RowCount-1)
+    for row := memStepLog.RowCount-2 downto 0 do
+        if memStepLog.Rows[row][cMemStepLog_AH] <> '' then
+            Exit(memStepLog.Rows[row][cMemStepLog_AH]);
+    Result := ''; // Default return value if we don't find anything
+end;
 
 function TfrmMain.InterpretPackage(APacket: string; ANow: TDateTime) : boolean;
 var
@@ -977,7 +987,18 @@ begin
     // AutoOff check
     if (not (FRunMode in [rmNone, rmMonitor, rmWait, rmLoop])) and
        ((APacket[2] = FPackets[FPacketIndex].AutoOff) or ((FSampleCounter > 3) and (FLastI < 0.0001))) then
-         if FInProgram then EBCBreak(false,false) else EBCBreak;
+    begin
+        // These checks have been added because CHG/DSG commands sometimes silently fail. If that happens, we
+        // wind back the state machine to try sending them again.
+        // Check whether the Ah counter has been reset on the EBC machine:
+        if (FSampleCounter < 20) and // If the CHG/DSG cycle is still in the first 10 seconds, the Ah counter should not have had time to increment significantly
+           (FloatToStr(FCurrentCapacity[caEBC]) = FindLastAhReadingInMemLog(memStepLog)) // The current reading hasn't changed since the last CHG/DSG step
+        then
+            // Retry the charge/discharge, the EBC probably failed to do it. The EBCBreak call below will kick off this command.
+            Dec(FProgramStep);
+
+        if FInProgram then EBCBreak(false,false) else EBCBreak;
+    end;
 
     // Cutoff checks
     if (FRunMode = rmCharging) and (FSampleCounter > 3) then
