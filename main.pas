@@ -3242,7 +3242,8 @@ var row : integer;
 begin
   row := memStepLog.RowCount;
   memStepLog.RowCount := row +1;
-  memStepLog.Rows[row][cMemStepLog_step] := GetStepNum;
+  // Hacky: we get called before FProgramStep is incremented for this step, so temporarily increment it for the step num
+  memStepLog.Rows[row][cMemStepLog_step] := GetCycleNum() + ':' + IntToStr(FProgramStep + 1);
   memStepLog.Rows[row][cMemStepLog_cmd] := cmd;
   memStepLog.Options := memStepLog.Options + [goRowSelect];
   memStepLog.Row := row;
@@ -3250,17 +3251,8 @@ end;
 
 
 procedure TfrmMain.memStepLogNewStep; // start a step
-var row : integer;
-    cmd : string;
 begin
-  cmd := FSteps[FCurrentStep].Command;
-
-  row := memStepLog.RowCount;
-  memStepLog.RowCount := row +1;
-  memStepLog.Rows[row][cMemStepLog_step] := GetStepNum;
-  memStepLog.Rows[row][cMemStepLog_cmd] := cmd;
-  memStepLog.Options := memStepLog.Options + [goRowSelect];
-  memStepLog.Row := row;
+  memStepLogAdd(FSteps[FCurrentStep].Command);
 end;
 
 
