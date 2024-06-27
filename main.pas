@@ -540,6 +540,7 @@ type
     procedure LoadSettings;
     procedure SaveSettings;
     procedure SetSettings;
+    function GetCycleNum: string;
     function GetStepNum: string;
     function GetModelIndex(AModel: Integer): Integer;
 public
@@ -1717,6 +1718,19 @@ begin
   LoadStep;
 end;
 
+function TfrmMain.GetCycleNum: string;
+var
+  I: Integer;
+begin
+    Result := '???'; // Default in case we don't find a LOOP step.
+    for I := High(FSteps) downto Low(FSteps) do
+        if FSteps[I].Command = 'LOOP' then
+        begin
+            Result := IntToStr(edtCycleStartNumber.Value + FSteps[I].LoopCounter);;
+            break;
+        end;
+end;
+
 function TfrmMain.GetStepNum: string;
 var
   I: Integer;
@@ -2084,7 +2098,7 @@ begin
     if mm_AutoCsvFileName.Checked then
     begin
       // build a file name
-      fileName := FormatDateTime('YYYYMMDD_HHMMSS',Now)+'.csv';
+      fileName := FormatDateTime('YYYY-MM-DD_HHMMSS',Now) + '_C' + GetCycleNum() + 'S_' + IntToStr(FProgramStep) + '.csv';
 
       // prefix taksbar name if enabled in settings
       if frmSettings.cgSettings.Checked[cTaskbarCsvPrefix] then
