@@ -18,7 +18,7 @@ const
 {$else}
   cFixedFont = 'Liberation Mono';
 {$endif}
-  cVersion = '2.18-mopo1';
+  cVersion = '2.18-mopo2';
   cVersionStr= 'EBC Controller '+cVersion;
 
   cConnectRetries = 10;
