@@ -2312,8 +2312,6 @@ begin
                 // Every 10 loops, clear the graph, to prevent memory usage growing out of control.
                 if LoopCounter mod 10 = 0 then
                   clearTransientData();
-                // MOPO change: we want one log file per cycle
-                StartLogging();
 
                 FProgramStep := 0;
                 edtTestVal.Value := 0.0;
@@ -2386,6 +2384,10 @@ begin
       end};
     end;
     Inc(FProgramStep);
+
+    // MOPO change: we want one log file per step of each cycle
+    StartLogging();
+
     btnSkip.Enabled := True;
     mm_skipStep.Enabled := True;
 
