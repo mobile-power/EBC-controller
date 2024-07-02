@@ -456,6 +456,7 @@ type
     FRecvStatusIndicatorInc : integer;
     FConfFile: string;
     FStartTime: TDateTime;
+    FGraphStartTime: TDateTime;
     FStepTime: TDateTime;
     FLastTime: TDateTime;
     FData: array of TCSVData;
@@ -933,9 +934,9 @@ begin
           Flush(FLogFile);
         end;
       end;
-      lsVoltage.AddXY(T, FLastU);
+      lsVoltage.AddXY(ANow - FGraphStartTime, FLastU);
       lsInvisibleVoltage.AddXY(0, Round1V(FLastU));
-      lsCurrent.AddXY(T, FLastI);
+      lsCurrent.AddXY(ANow - FGraphStartTime, FLastI);
       lsInvisibleCurrent.AddXY(0, Round100mA(FLastI));
     end;
 
@@ -2821,6 +2822,7 @@ begin
     FreezeEdits;
     FIntTime := frmSettings.edtIntTime.Value * 1000;
     FStartTime := Now;
+    FGraphStartTime := Now;
     if pcProgram.ActivePage = tsProgram then
     begin
       LoadStep;
@@ -2844,6 +2846,7 @@ begin
   lsVoltage.Clear;
   lsInvisibleVoltage.Clear;
   lsInvisibleCurrent.Clear;
+  FGraphStartTime := Now;
 end;
 
 procedure TfrmMain.btnStopClick(Sender: TObject);
@@ -2974,6 +2977,7 @@ begin
   FConnState := csNone;
   FInProgram := False;
   FStartTime := Now;
+  FGraphStartTime := Now;
   FShowJoule := False;
   FShowCoulomb := False;
   FDelta[0].Time := Now;
