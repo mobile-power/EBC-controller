@@ -540,6 +540,7 @@ type
     procedure LoadSettings;
     procedure SaveSettings;
     procedure SetSettings;
+    function GetAdjustedCycleNum: string;
     function GetCycleNum: string;
     function GetStepNum: string;
     function GetModelIndex(AModel: Integer): Integer;
@@ -1739,7 +1740,7 @@ begin
   LoadStep;
 end;
 
-function TfrmMain.GetCycleNum: string;
+function TfrmMain.GetAdjustedCycleNum: string;
 var
   I: Integer;
 begin
@@ -1748,6 +1749,19 @@ begin
         if FSteps[I].Command = 'LOOP' then
         begin
             Result := IntToStr(edtCycleStartNumber.Value + FSteps[I].LoopCounter);;
+            break;
+        end;
+end;        
+
+function TfrmMain.GetCycleNum: string;
+var
+  I: Integer;
+begin
+    Result := '???'; // Default in case we don't find a LOOP step.
+    for I := High(FSteps) downto Low(FSteps) do
+        if FSteps[I].Command = 'LOOP' then
+        begin
+            Result := IntToStr(FSteps[I].LoopCounter);;
             break;
         end;
 end;
@@ -2119,7 +2133,7 @@ begin
     if mm_AutoCsvFileName.Checked then
     begin
       // build a file name
-      fileName := FormatDateTime('YYYY-MM-DD_HHMMSS',Now) + '_C' + GetCycleNum() + '.csv';
+      fileName := FormatDateTime('YYYY-MM-DD_HHMMSS',Now) + '_C' + GetAdjustedCycleNum() + '.csv';
 
       // prefix taksbar name if enabled in settings
       if frmSettings.cgSettings.Checked[cTaskbarCsvPrefix] then
@@ -3264,7 +3278,7 @@ begin
   row := memStepLog.RowCount;
   memStepLog.RowCount := row +1;
   // Hacky: we get called before FProgramStep is incremented for this step, so temporarily increment it for the step num
-  memStepLog.Rows[row][cMemStepLog_step] := GetCycleNum() + ':' + IntToStr(FProgramStep + 1);
+  memStepLog.Rows[row][cMemStepLog_step] := 'cy' + GetAdjustedCycleNum() + ' ' + GetCycleNum() + ':' + IntToStr(FProgramStep + 1);
   memStepLog.Rows[row][cMemStepLog_cmd] := cmd;
   memStepLog.Options := memStepLog.Options + [goRowSelect];
   memStepLog.Row := row;
