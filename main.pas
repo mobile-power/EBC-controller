@@ -993,7 +993,8 @@ begin
         // These checks have been added because CHG/DSG commands sometimes silently fail. If that happens, we
         // wind back the state machine to try sending them again.
         // Check whether the Ah counter has been reset on the EBC machine:
-        if (FSampleCounter < 20) and // If the CHG/DSG cycle is still in the first 10 seconds, the Ah counter should not have had time to increment significantly
+        DoLog(format('Retrying this step. FSampleCounter = %d, FCurrentCapacity[caEBC] = %f, FindLastAhReadingInMemLog = %S', [FSampleCounter, FCurrentCapacity[caEBC], FindLastAhReadingInMemLog(memStepLog)]));
+        if (FSampleCounter < 300) and // If the CHG/DSG cycle is still in the first 10 seconds, the Ah counter should not have had time to increment significantly
            (FloatToStr(FCurrentCapacity[caEBC]) = FindLastAhReadingInMemLog(memStepLog)) // The current reading hasn't changed since the last CHG/DSG step
         then
             // Retry the charge/discharge, the EBC probably failed to do it. The EBCBreak call below will kick off this command.
@@ -2106,17 +2107,17 @@ begin
   if memLog.Lines.Count > 40000 then
     memLog.Lines.Delete(0);
   memLog.Lines.Add(AText);
-  memLog.VertScrollBar.Position := 1000000;
+  // memLog.VertScrollBar.Position := 1000000;
 end;
 
 
 procedure TfrmMain.DoHexLog(AText: string);
 begin
-  if memLog.Lines.Count > 10000 then
+  if memLog.Lines.Count > 40000 then
     memLog.Lines.Delete(0);
   memLog.Lines.Add(AText);
 
-  memLog.VertScrollBar.Position := 1000000;
+  // memLog.VertScrollBar.Position := 1000000;
 //  SendMessage(memLog.Handle, WM_VSCROLL, SB_BOTTOM, 0);
 end;
 
