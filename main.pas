@@ -777,7 +777,7 @@ begin
       Inc(N, Length(s));
     end;
   until (N >= 19) or (MillisecondsBetween(Now, E) > 200);
-  DumpSerialData('<','', rBuf, 0);
+  // DumpSerialData('<','', rBuf, 0);
   while N >= 19 do
   begin
     s := copy(r,1,19); delete(r,1,19); dec(N,19);
