@@ -574,6 +574,8 @@ private
 var
   frmMain: TfrmMain;
 
+function  FormatDateTimeISO8601(a_DateTime: TDateTime): string;
+
 implementation
 
 {$R *.lfm}
@@ -993,7 +995,7 @@ begin
         // These checks have been added because CHG/DSG commands sometimes silently fail. If that happens, we
         // wind back the state machine to try sending them again.
         // Check whether the Ah counter has been reset on the EBC machine:
-        DoLog(format('Retrying this step. FSampleCounter = %d, FCurrentCapacity[caEBC] = %f, FindLastAhReadingInMemLog = %S', [FSampleCounter, FCurrentCapacity[caEBC], FindLastAhReadingInMemLog(memStepLog)]));
+        DoLog(format('%S Retrying this step. FSampleCounter = %d, FCurrentCapacity[caEBC] = %f, FindLastAhReadingInMemLog = %S', [FormatDateTimeISO8601(Now()), FSampleCounter, FCurrentCapacity[caEBC], FindLastAhReadingInMemLog(memStepLog)]));
         if (FSampleCounter < 300) and // If the CHG/DSG cycle is still in the first 10 seconds, the Ah counter should not have had time to increment significantly
            (FloatToStr(FCurrentCapacity[caEBC]) = FindLastAhReadingInMemLog(memStepLog)) // The current reading hasn't changed since the last CHG/DSG step
         then
