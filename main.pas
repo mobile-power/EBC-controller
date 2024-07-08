@@ -995,14 +995,14 @@ begin
         // These checks have been added because CHG/DSG commands sometimes silently fail. If that happens, we
         // wind back the state machine to try sending them again.
         // Check whether the Ah counter has been reset on the EBC machine:
-        DoLog(format('%S After CHG/DSG params: FSampleCounter = %d, FCurrentCapacity[caEBC] = %f, FindLastAhReadingInMemLog = %S', [FormatDateTimeISO8601(Now()), FSampleCounter, FCurrentCapacity[caEBC], FindLastAhReadingInMemLog(memStepLog)]));
+        DoLog(format('%s After CHG/DSG params: FSampleCounter = %d, FCurrentCapacity[caEBC] = %s, FindLastAhReadingInMemLog = %s', [FormatDateTimeISO8601(Now()), FSampleCounter, FloatToStr(FCurrentCapacity[caEBC]), FindLastAhReadingInMemLog(memStepLog)]));
         if (FSampleCounter < 300) and // If the CHG/DSG cycle is still in the first 10 seconds, the Ah counter should not have had time to increment significantly
            (FloatToStr(FCurrentCapacity[caEBC]) = FindLastAhReadingInMemLog(memStepLog)) // The current reading hasn't changed since the last CHG/DSG step
         then
         begin
             // Retry the charge/discharge, the EBC probably failed to do it. The EBCBreak call below will kick off this command.
             Dec(FProgramStep);    
-            DoLog(format('%S Retrying this step.', [FormatDateTimeISO8601(Now())]));
+            DoLog(format('%s Retrying this step.', [FormatDateTimeISO8601(Now())]));
         end;
 
         if FInProgram then EBCBreak(false,false) else EBCBreak;
@@ -1065,7 +1065,7 @@ begin
     s := snd;
     s[crcsendpos] := checksum(s, crcsendpos);
     Serial.WriteData(s);
-    DumpSerialData('>','', s, crcsendpos);
+    DumpSerialData(FormatDateTimeISO8601(Now()) + ' >','', s, crcsendpos);
   end;
 end;
 
@@ -1509,8 +1509,9 @@ begin
     Result[6] := p2[2];
     Result[7] := p3[1];
     Result[8] := p3[2];
-    DoLog (format('command paramaters %s %s %s:',
-      [inttohex(byte(P1[1]))+inttohex(byte(P1[2])),
+    DoLog (format('%s command paramaters %s %s %s:',
+      [FormatDateTimeISO8601(Now()),
+       inttohex(byte(P1[1]))+inttohex(byte(P1[2])),
        inttohex(byte(P2[1]))+inttohex(byte(P2[2])),
        inttohex(byte(P3[1]))+inttohex(byte(P3[2]))]));
 //    Result[crcsendpos] := checksum(Result, crcsendpos);
@@ -2260,6 +2261,7 @@ begin
 //  begin
 //    Inc(FProgramStep);
 //  end;
+  DoLog(format('%s LoadStep FProgramStep=%d', [FormatDateTimeISO8601(Now()), FProgramStep]));
   if FProgramStep < Length(FSteps) then
   begin
     DoSend := True;
