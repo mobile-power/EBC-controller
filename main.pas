@@ -995,9 +995,9 @@ begin
         // These checks have been added because CHG/DSG commands sometimes silently fail. If that happens, we
         // wind back the state machine to try sending them again.
         // Check whether the Ah counter has been reset on the EBC machine:
-        DoLog(format('%s After CHG/DSG params: FSampleCounter = %d, FCurrentCapacity[caEBC] = %s, FindLastAhReadingInMemLog = %s', [FormatDateTimeISO8601(Now()), FSampleCounter, FloatToStr(FCurrentCapacity[caEBC]), FindLastAhReadingInMemLog(memStepLog)]));
+        DoLog(format('%s After CHG/DSG params: FSampleCounter = %d, FCurrentCapacity[caEBC] = %s, FindLastAhReadingInMemLog = %s', [FormatDateTimeISO8601(Now()), FSampleCounter, MyFloatStr(FCurrentCapacity[caEBC]), FindLastAhReadingInMemLog(memStepLog)]));
         if (FSampleCounter < 300) and // If the CHG/DSG cycle is still in the first 10 seconds, the Ah counter should not have had time to increment significantly
-           (FloatToStr(FCurrentCapacity[caEBC]) = FindLastAhReadingInMemLog(memStepLog)) // The current reading hasn't changed since the last CHG/DSG step
+           (MyFloatStr(FCurrentCapacity[caEBC]) = FindLastAhReadingInMemLog(memStepLog)) // The current reading hasn't changed since the last CHG/DSG step
         then
         begin
             // Retry the charge/discharge, the EBC probably failed to do it. The EBCBreak call below will kick off this command.
