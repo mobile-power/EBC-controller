@@ -2420,10 +2420,10 @@ begin
         if DoSend then
         begin
           SetupChecks;
-          FSampleCounter := 0;
           //DoLog('Autooff char: ' + IntToHex(Ord(FPackets[FPacketIndex].AutoOff[1]), 2));
           FStartU := FLastU;
           SendData(MakePacket2(I, smStart, TestVal, P2, CutTime, CutAmp));
+          FSampleCounter := 0;
         end;
       end{ else
       begin
