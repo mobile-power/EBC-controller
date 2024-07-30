@@ -1012,7 +1012,7 @@ begin
     end;
 
     // Cutoff checks
-    if (FRunMode = rmCharging) and (FSampleCounter > 3) then
+    if (FRunMode = rmCharging) and (FSampleCounter > 10) then
     begin
       if FLastI < FChecks.cCurrent then
       begin
