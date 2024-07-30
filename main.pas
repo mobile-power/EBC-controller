@@ -196,6 +196,7 @@ Const
   cst_ConnectedModel = 2;
   cst_RunMode = 3;
   cst_LogFileName = 4;
+  cst_SerialDeviceName = 5;
 
 
 
@@ -1945,6 +1946,7 @@ begin
 {$else}
   frmconnect.edtDevice.Text := ini.ReadString(cAppSec, cSerial, '/dev/ttyUSB0');
 {$endif}
+  setStatusLine(cst_SerialDeviceName, frmconnect.edtDevice.Text);
   mm_AutoLog.Checked := ini.readBool(cAppSec, cAutoLog, false);
   mm_AutoCsvFileName.Checked := ini.readBool(cAppSec, cAutoCsvFileName, true);
 
@@ -2470,6 +2472,7 @@ begin
       if frmConnect.ShowModal = mrOk then
       begin
         setStatusLine(cst_ConnectionStatus,cConnecting);
+        setStatusLine(cst_SerialDeviceName, frmConnect.edtDevice.Text);
         FConnState := csConnecting;
         Serial.Device := frmconnect.edtDevice.Text;
         Serial.OnRxData := @SerialRec;

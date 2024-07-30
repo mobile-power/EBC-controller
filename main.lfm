@@ -34,6 +34,9 @@ object frmMain: TfrmMain
       end    
       item
         Width = 200
+      end    
+      item
+        Width = 60
       end>
     SimplePanel = False
     OnDrawPanel = MainStatusBarDrawPanel
