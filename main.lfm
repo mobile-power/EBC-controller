@@ -1,7 +1,7 @@
 object frmMain: TfrmMain
-  Left = 378
+  Left = 405
   Height = 698
-  Top = 81
+  Top = 411
   Width = 1723
   Anchors = []
   Caption = 'EBC_controller'
@@ -148,7 +148,7 @@ object frmMain: TfrmMain
       Top = 416
       Width = 1408
       Align = alBottom
-      ColCount = 8
+      ColCount = 10
       Columns = <      
         item
           Title.Caption = 'Step'
@@ -156,43 +156,51 @@ object frmMain: TfrmMain
         end      
         item
           Title.Caption = 'cmd'
-          Width = 140
+          Width = 120
         end      
         item
           Alignment = taRightJustify
           Title.Alignment = taRightJustify
           Title.Caption = 'AH'
-          Width = 80
+          Width = 60
         end      
         item
           Alignment = taRightJustify
           Title.Alignment = taRightJustify
           Title.Caption = 'WH'
-          Width = 128
+          Width = 60
         end      
         item
           Alignment = taRightJustify
           Title.Alignment = taRightJustify
-          Title.Caption = 'Time'
-          Width = 128
+          Title.Caption = 'Duration'
+          Width = 80
         end      
         item
           Alignment = taRightJustify
           Title.Alignment = taRightJustify
           Title.Caption = 'Start voltage'
-          Width = 100
+          Width = 80
         end      
         item
           Alignment = taRightJustify
           Title.Alignment = taRightJustify
           Title.Caption = 'End voltage'
-          Width = 100
+          Width = 80
         end      
         item
           Alignment = taRightJustify
           Title.Alignment = taRightJustify
           Title.Caption = 'End current'
-          Width = 100
+          Width = 80
+        end      
+        item
+          Title.Caption = 'Start time'
+          Width = 120
+        end      
+        item
+          Title.Caption = 'End time'
+          Width = 120
         end>
       FixedCols = 0
       Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goColSizing, goRowSelect, goSmoothScroll]

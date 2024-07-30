@@ -589,6 +589,9 @@ const
   cMemStepLog_startV = 5;
   cMemStepLog_endV   = 6;
   cMemStepLog_endA   = 7;
+  cMemStepLog_startT = 8;
+  cMemStepLog_endT   = 9;
+
 
 
 function ValOk(ANum: Extended): Boolean;
@@ -3288,10 +3291,13 @@ procedure TfrmMain.memStepLogAdd (cmd : string);
 var row : integer;
 begin
   row := memStepLog.RowCount;
+  // Set the end time of the previous step, if any.
+  if row > 0 then memStepLog.Rows[row - 1][cMemStepLog_endT] := FormatDateTimeISO8601(Now());
   memStepLog.RowCount := row +1;
   // Hacky: we get called before FProgramStep is incremented for this step, so temporarily increment it for the step num
   memStepLog.Rows[row][cMemStepLog_step] := 'cy' + GetAdjustedCycleNum() + ' ' + GetCycleNum() + ':' + IntToStr(FProgramStep + 1);
   memStepLog.Rows[row][cMemStepLog_cmd] := cmd;
+  memStepLog.Rows[row][cMemStepLog_startT] := FormatDateTimeISO8601(Now());
   memStepLog.Options := memStepLog.Options + [goRowSelect];
   memStepLog.Row := row;
 end;
