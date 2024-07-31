@@ -940,10 +940,10 @@ begin
           Flush(FLogFile);
         end;
       end;
-      lsVoltage.AddXY(ANow - FGraphStartTime, FLastU);
-      lsInvisibleVoltage.AddXY(0, Round1V(FLastU));
-      lsCurrent.AddXY(ANow - FGraphStartTime, FLastI);
-      lsInvisibleCurrent.AddXY(0, Round100mA(FLastI));
+      lsVoltage.AddXY(ANow, FLastU);
+      lsInvisibleVoltage.AddXY(ANow, Round1V(FLastU));
+      lsCurrent.AddXY(ANow, FLastI);
+      lsInvisibleCurrent.AddXY(ANow, Round100mA(FLastI));
     end;
 
     FDelta[FDeltaIndex].SumV := FDelta[FDeltaIndex].SumV + FLastU;

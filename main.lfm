@@ -1,7 +1,7 @@
 object frmMain: TfrmMain
-  Left = 405
+  Left = 828
   Height = 698
-  Top = 411
+  Top = 7
   Width = 1723
   Anchors = []
   Caption = 'EBC_controller'
@@ -834,7 +834,7 @@ object frmMain: TfrmMain
     end
   end
   object DateTimeIntervalChartSource: TDateTimeIntervalChartSource
-    DateTimeFormat = 'HH:MM:SS'
+    DateTimeFormat = 'yyyy-mm-dd HH:MM:SS'
     Steps = [dtsHour, dtsMinute, dtsSecond]
     Left = 440
     Top = 80
