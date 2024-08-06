@@ -993,7 +993,7 @@ begin
 
     // AutoOff check
     if (not (FRunMode in [rmNone, rmMonitor, rmWait, rmLoop])) and
-       ((APacket[2] = FPackets[FPacketIndex].AutoOff) or ((FSampleCounter > 3) and (FLastI < 0.0001))) then
+       ((APacket[2] = FPackets[FPacketIndex].AutoOff) or ((FSampleCounter > 10) and (FLastI < 0.0001))) then
     begin
         // These checks have been added because CHG/DSG commands sometimes silently fail. If that happens, we
         // wind back the state machine to try sending them again.
@@ -1015,7 +1015,7 @@ begin
     end;
 
     // Cutoff checks
-    if (FRunMode = rmCharging) and (FSampleCounter > 10) then
+    if (FRunMode = rmCharging) and (FSampleCounter > 3) then
     begin
       if FLastI < FChecks.cCurrent then
       begin
