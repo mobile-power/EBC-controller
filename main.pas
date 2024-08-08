@@ -1019,7 +1019,7 @@ begin
     end;
 
     // Cutoff checks
-    if (FRunMode = rmCharging) and (FSampleCounter > 3) and not FLoadStepBusy then
+    if (FRunMode = rmCharging) and (FSampleCounter > 10) and not FLoadStepBusy then
     begin
       if FLastI < FChecks.cCurrent then
       begin
