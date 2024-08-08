@@ -499,6 +499,8 @@ type
     FIntTime: Integer;
     FConnectRetryCountdown: Integer;
     fLanguageCode: String;
+    // We're busy doing a state change currently, so don't allow another state change to kick off right now.
+    FLoadStepBusy: Boolean;
     procedure DoHexLog(AText: string);
 
     procedure SerialRec(Sender: TObject);
@@ -993,7 +995,9 @@ begin
 
     // AutoOff check
     if (not (FRunMode in [rmNone, rmMonitor, rmWait, rmLoop])) and
-       ((APacket[2] = FPackets[FPacketIndex].AutoOff) or ((FSampleCounter > 10) and (FLastI < 0.0001))) then
+       ((APacket[2] = FPackets[FPacketIndex].AutoOff) or ((FSampleCounter > 10) and (FLastI < 0.0001))) and
+       not FLoadStepBusy
+    then
     begin
         // These checks have been added because CHG/DSG commands sometimes silently fail. If that happens, we
         // wind back the state machine to try sending them again.
@@ -1015,7 +1019,7 @@ begin
     end;
 
     // Cutoff checks
-    if (FRunMode = rmCharging) and (FSampleCounter > 3) then
+    if (FRunMode = rmCharging) and (FSampleCounter > 3) and not FLoadStepBusy then
     begin
       if FLastI < FChecks.cCurrent then
       begin
@@ -2268,6 +2272,7 @@ begin
 //  begin
 //    Inc(FProgramStep);
 //  end;
+  FLoadStepBusy := true;
   DoLog(format('%s LoadStep FProgramStep=%d', [FormatDateTimeISO8601(Now()), FProgramStep]));
   if FProgramStep < Length(FSteps) then
   begin
@@ -2449,6 +2454,8 @@ begin
     OffSetting;
     memStepLogEnd;
   end;
+
+  FLoadStepBusy := false;
 end;
 
 
