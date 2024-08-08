@@ -2272,6 +2272,7 @@ begin
 //  begin
 //    Inc(FProgramStep);
 //  end;
+  if FLoadStepBusy then Exit;
   FLoadStepBusy := true;
   DoLog(format('%s LoadStep FProgramStep=%d', [FormatDateTimeISO8601(Now()), FProgramStep]));
   if FProgramStep < Length(FSteps) then
@@ -2845,6 +2846,7 @@ begin
     FreezeEdits;
     FIntTime := frmSettings.edtIntTime.Value * 1000;
     FStartTime := Now;
+    FLoadStepBusy := false; // Defensively set back to false, in case it was left as true by a previous run.
     if pcProgram.ActivePage = tsProgram then
     begin
       LoadStep;
