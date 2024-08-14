@@ -2376,6 +2376,8 @@ begin
                 FProgramStep := 0;
                 edtTestVal.Value := 0.0;
 
+                // We're going to recurse, mark this function as not busy so this call can run.
+                FLoadStepBusy := false;
                 LoadStep;
                 Dec(FProgramStep); // Increments in end of recursive call and this call.
                 //memStepLog.Lines.Add('---');
