@@ -286,6 +286,7 @@ type
   { TfrmMain }
 
   TfrmMain = class(TForm)
+    edtSerialLogDir: TEdit;
     btnAdjust: TButton;
     btnCont: TButton;
     btnProg: TButton;
@@ -464,6 +465,8 @@ type
   public
     FPackets: array of TPacket;
   private
+    FSerialLogFileName: string;
+    FSerialLogDir: string;
     fLogFileIsOpen : boolean;
     fLogFileName : string;
     FPacketIndex: Integer;
@@ -502,7 +505,7 @@ type
     // We're busy doing a state change currently, so don't allow another state change to kick off right now.
     FLoadStepBusy: Boolean;
     procedure DoHexLog(AText: string);
-
+    procedure HandleSerialDataReceived(const Data: string);
     procedure SerialRec(Sender: TObject);
     function InterpretPackage(APacket: string; ANow: TDateTime) : boolean;
     procedure DumpSerialData(prefix,postfix: string; snd: string; Pos: Integer);
@@ -581,6 +584,10 @@ function  FormatDateTimeISO8601(a_DateTime: TDateTime): string;
 implementation
 
 {$R *.lfm}
+
+var
+  FSerialLogDir: string;  // Global variable to store the serial log directory
+  FSerialLogFileName: string;  // Global variable to store the log file name
 
 const
   cMemStepLog_step   = 0;
@@ -741,6 +748,12 @@ begin
 
 end;
 
+procedure TfrmMain.UpdateSerialLogDir;
+begin
+  edtSerialLogDir.Text := FSerialLogDir;
+end;
+
+
 procedure TfrmMain.SerialRec(Sender: TObject);
 var
   s: string;
@@ -782,6 +795,7 @@ begin
       Inc(N, Length(s));
     end;
   until (N >= 19) or (MillisecondsBetween(Now, E) > 200);
+
   // DumpSerialData('<','', rBuf, 0);
   while N >= 19 do
   begin
@@ -1177,8 +1191,6 @@ begin
   WriteLn(f, d.vTime, ',', MyFloatStr(d.vCurrent), ',', MyFloatStr(d.vVoltage), ',', MyFloatStr(d.CapacityEBC), ',', MyFloatStr(d.CapacityLocal), ',', d.runMode, ',', FormatDateTimeISO8601(d.timestampUTC), ',', d.stepNum);
 end;
 
-
-
 procedure TfrmMain.SaveCSV(AFile: string);
 var
   f: Text;
@@ -1190,6 +1202,36 @@ begin
     SaveCSVLine(f, FData[I]);
   Flush(f);
   CloseFile(f);
+end;
+
+procedure TfrmMain.HandleSerialDataReceived(const Data: string);
+var
+  ReceivedData: string;
+  LogFile: TextFile;
+  LogFilePath: string;
+begin
+  // Step 1: Read the data received via the serial port
+  ReceivedData := Serial.ReadData;
+
+  // Step 2: Update the memo with the received data
+  memLog.Lines.Add(ReceivedData);
+
+  // Step 3: Create the log file path using the global variable
+  LogFilePath := FAppDir + FSerialLogFileName;
+
+  // Step 4: Open the log file, append the received data, and close the file
+  AssignFile(LogFile, LogFilePath);
+
+  try
+    if FileExists(LogFilePath) then
+      Append(LogFile)
+    else
+      Rewrite(LogFile);
+
+    WriteLn(LogFile, FormatDateTime('hh:nn:ss', Now) + ' - ' + ReceivedData);
+  finally
+    CloseFile(LogFile);
+  end;
 end;
 
 function TfrmMain.GetHexPacketFromIni(AIniFile: TMyIniFile; ASection: string;
@@ -2141,7 +2183,7 @@ end;
 
 function TfrmMain.StartLogging : boolean;
 var
-  fileName,fileDir : string;
+  fileName,fileDir, serialLogFilename : string;
   err,i : integer;
   prefix : string;
 begin
@@ -2154,7 +2196,6 @@ begin
     begin
       // build a file name
       fileName := FormatDateTime('YYYY-MM-DD_HHMMSS',Now) + '_C' + GetAdjustedCycleNum() + '.csv';
-
       // prefix taksbar name if enabled in settings
       if frmSettings.cgSettings.Checked[cTaskbarCsvPrefix] then
         if Caption <> cDefaultCaption then
@@ -2193,7 +2234,7 @@ begin
       if MessageDlg(cFileExists,format(cFileOverwrite,[fileName]), mtConfirmation,[mbYes, mbNo],0) <> mrYes then
         exit;
 
-    // open log file
+    // open the main log file (CSV)
     InOutRes := 0;
     AssignFile(FLogFile, fileName);
     rewrite(FLogFile);
@@ -2203,6 +2244,7 @@ begin
        MessageDlg(cError,Format(cUnableToCreateLogFile,[fileName,err]), mtError,[mbAbort],0);
        exit;
     end;
+    // Write header to the main log file (CSV)
     writeln(FlogFile,'uptime_seconds,current,voltage,capacity_ebc_wh,capacity_local_wh,run_mode,timestamp,step_num');
     err := ioresult;
     if (err <> 0) then
@@ -2214,6 +2256,19 @@ begin
     setStatusLine(cst_LogFileName,fileName);
     fLogFileIsOpen := true;
     fLogFileName := fileName;
+
+    // Now create and open the serial log file
+    serialLogFileName := ChangeFileExt(fileName, '.serial.txt');
+    AssignFile(FSerialLogFile, serialLogFileName);
+    Rewrite(FSerialLogFile);
+    err := IOResult;
+    if (err <> 0) then
+    begin
+      MessageDlg(cError, Format(cUnableToCreateLogFile, [serialLogFileName, err]), mtError, [mbAbort], 0);
+      exit;
+    end;
+    fSerialLogFileIsOpen := True;
+
     result := true;
   end else
     exit(true);
@@ -2221,16 +2276,28 @@ end;
 
 procedure TfrmMain.StopLogging;
 begin
-  fLogFileIsOpen := false;
+  // Close the main log file (CSV)
   if fLogFileIsOpen then
   begin
     InOutRes := 0;
     Flush(FLogFile);
     CloseFile(FLogFile);
     if IOResult <> 0 then
-      MessageDlg(cError,Format(cErrorClosingLogfile,[IOResult]), mtError,[mbAbort],0);
-    setStatusLine(cst_LogFileName,'');
+      MessageDlg(cError, Format(cErrorClosingLogfile, [IOResult]), mtError, [mbAbort], 0);
+    setStatusLine(cst_LogFileName, '');
     fLogFileName := '';
+    fLogFileIsOpen := False;
+  end;
+
+  // Close the serial log file
+  if fSerialLogFileIsOpen then
+  begin
+    InOutRes := 0;
+    Flush(FSerialLogFile);
+    CloseFile(FSerialLogFile);
+    if IOResult <> 0 then
+      MessageDlg(cError, Format(cErrorClosingLogfile, [IOResult]), mtError, [mbAbort], 0);
+    fSerialLogFileIsOpen := False;
   end;
 end;
 
@@ -3017,6 +3084,14 @@ begin
   Serial.Parity := pOdd;
   Serial.RcvLineCRLF:=false;
   Serial.StopBits:=sbOne;
+
+  // Initialize the serial log directory with a default value or load it from settings
+  FSerialLogDir := 'C:\Logs\Serial'; // Set a default directory path
+  edtSerialLogDir.Text := FSerialLogDir; // Update the text box with the directory
+  // Initialize the serial log file name with today's date
+  FSerialLogFileName := FormatDateTime('YYYYMMDD', Now) + '.log';
+  // Set the event handler for receiving data on the serial port
+  Serial.OnDataReceived := @HandleSerialDataReceived;
 
 
   SetLength(stText, cstMax + 1);
