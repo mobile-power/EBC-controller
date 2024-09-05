@@ -20,9 +20,9 @@
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="7"/>
-        <TopLine Value="1471"/>
-        <CursorPos X="30" Y="1492"/>
-        <FoldState Value=" T1@80Au"/>
+        <TopLine Value="990"/>
+        <CursorPos X="22" Y="1021"/>
+        <FoldState Value=" T1@20A7"/>
         <ExtraEditorCount Value="1"/>
         <ExtraEditor1>
           <EditorIndex Value="-1"/>
@@ -33,13 +33,13 @@
         <UsageCount Value="205"/>
         <Bookmarks Count="8">
           <Item0 X="25" Y="767"/>
-          <Item1 X="15" Y="2201" ID="5"/>
-          <Item2 X="37" Y="1546" ID="6"/>
-          <Item3 X="3" Y="1711" ID="7"/>
-          <Item4 X="17" Y="2315" ID="8"/>
-          <Item5 Y="2325" ID="4"/>
+          <Item1 X="15" Y="2195" ID="5"/>
+          <Item2 X="37" Y="1540" ID="6"/>
+          <Item3 X="3" Y="1705" ID="7"/>
+          <Item4 X="17" Y="2309" ID="8"/>
+          <Item5 Y="2319" ID="4"/>
           <Item6 X="13" Y="801" ID="9"/>
-          <Item7 X="5" Y="2134" ID="1"/>
+          <Item7 X="5" Y="2128" ID="1"/>
         </Bookmarks>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>

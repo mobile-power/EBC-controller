@@ -1021,12 +1021,6 @@ begin
         if FInProgram then EBCBreak(false,false) else EBCBreak;
     end;
 
-    // Adding in a hard voltage limit check
-    if (FLastU < 2.45) or (FLastU > 4.25) then // EBC can't go below 2.45V or above 4.25V
-    begin
-      DoLog(format('%s Voltage out of bounds: FlastU = %s', [FormatDateTimeISO8601(Now()), MyFloatStr(FLastU)]));  // Print Error
-      EBCBreak;  // Stops the cycler
-    end;
 
     // Cutoff checks
     if (FRunMode = rmCharging) and (FSampleCounter > 10) and not FLoadStepBusy then
