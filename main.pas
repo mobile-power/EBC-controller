@@ -1021,6 +1021,12 @@ begin
         if FInProgram then EBCBreak(false,false) else EBCBreak;
     end;
 
+    // print statement in serial logs/console window for when the voltage goes out of bounds
+    if (FLastU < 2.45) or (FLastU > 4.25) // EBC can't go below 2.45V or above 4.25V
+    then
+    begin
+      DoLog(format('%s Voltage out of bounds: FlastU = %s', [FormatDateTimeISO8601(Now()), MyFloatStr(FLastU)]));
+    end;
 
     // Cutoff checks
     if (FRunMode = rmCharging) and (FSampleCounter > 10) and not FLoadStepBusy then
@@ -1067,9 +1073,7 @@ begin
      output := prefix + ' ' + s + ' ' + IntToHex(Ord(checksum(snd, Pos)),2) + ' ' + postfix
   else
      output := prefix + ' ' + s + ' ' + postfix;
-  DoHexLog(output);
-  //if fSerialLogFileIsOpen then        commented out as trying new method for logging to serial .txt file
-  //   WriteLn(fSerialLogFile, output);
+  DoHexLog(output); // DoHexLog procedure prints these Serial communications in the console window and saves to the Serial.txt file
 end;
 
 procedure TfrmMain.SendData(snd: string);
