@@ -1068,8 +1068,8 @@ begin
   else
      output := prefix + ' ' + s + ' ' + postfix;
   DoHexLog(output);
-  if fSerialLogFileIsOpen then
-     WriteLn(fSerialLogFile, output);
+  //if fSerialLogFileIsOpen then        commented out as trying new method for logging to serial .txt file
+  //   WriteLn(fSerialLogFile, output);
 end;
 
 procedure TfrmMain.SendData(snd: string);
@@ -1483,7 +1483,7 @@ begin
       p1 := EncodeCurrent(round2(TestVal,2));      // current
       p2 := EncodeVoltage(round2(SecondParam,2));  // voltage without round we will get 4.219999999 when 4.22 is requested
       P3 := EncodeCurrent(cutoffCurrent);
-      doLog(format('Commands: ChargeI:%g ChargeV:%g CutA:%g',[round2(TestVal,2),round2(edtChargeV.Value,2),round2(edtCutA.Value,2)]));  // print out of parameters - changed txt of printout
+      doLog(format('Steps: Charge Amps: %g Charge Volts: %g CutAmps: %g',[round2(TestVal,2),round2(edtChargeV.Value,2),round2(edtCutA.Value,2)]));  // print out of parameters - changed txt of printout
     end else
     begin
       if ATime = 250 then  //250 is a forbidden value for some reason
@@ -2130,6 +2130,8 @@ begin
   if memLog.Lines.Count > 40000 then
     memLog.Lines.Delete(0);
   memLog.Lines.Add(AText);
+  if fSerialLogFileIsOpen then     // log to the serial .txt file
+     WriteLn(fSerialLogFile, AText);
   // memLog.VertScrollBar.Position := 1000000;
 end;
 
@@ -2139,7 +2141,8 @@ begin
   if memLog.Lines.Count > 40000 then
     memLog.Lines.Delete(0);
   memLog.Lines.Add(AText);
-
+  if fSerialLogFileIsOpen then // log to the serial .txt file
+     WriteLn(fSerialLogFile, AText);
   // memLog.VertScrollBar.Position := 1000000;
 //  SendMessage(memLog.Handle, WM_VSCROLL, SB_BOTTOM, 0);
 end;
