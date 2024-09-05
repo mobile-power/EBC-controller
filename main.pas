@@ -286,7 +286,6 @@ type
   { TfrmMain }
 
   TfrmMain = class(TForm)
-    edtSerialLogDir: TEdit;
     btnAdjust: TButton;
     btnCont: TButton;
     btnProg: TButton;
@@ -506,7 +505,6 @@ type
     // We're busy doing a state change currently, so don't allow another state change to kick off right now.
     FLoadStepBusy: Boolean;
     procedure DoHexLog(AText: string);
-    procedure UpdateSerialLogDir;
     procedure SerialRec(Sender: TObject);
     function InterpretPackage(APacket: string; ANow: TDateTime) : boolean;
     procedure DumpSerialData(prefix,postfix: string; snd: string; Pos: Integer);
@@ -744,12 +742,6 @@ procedure TfrmMain.tsProgramContextPopup(Sender: TObject; MousePos: TPoint;
 begin
 
 end;
-
-procedure TfrmMain.UpdateSerialLogDir;
-begin
-  edtSerialLogDir.Text := FSerialLogDir;
-end;
-
 
 procedure TfrmMain.SerialRec(Sender: TObject);
 var
@@ -3058,7 +3050,6 @@ begin
 
   // Initialize the serial log directory with a default value or load it from settings
   FSerialLogDir := 'C:\Logs\Serial'; // Set a default directory path
-  edtSerialLogDir.Text := FSerialLogDir; // Update the text box with the directory
 
 
   SetLength(stText, cstMax + 1);

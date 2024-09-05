@@ -29,7 +29,6 @@ type
     OkButton: TButton;
     cgSettings: TCheckGroup;
     edtProgFile: TFileNameEdit;
-    edtSerialLogDir: TDirectoryEdit; // New directory edit for serial logs
     grpParam: TGroupBox;
     edtIntTime: TJLabeledIntegerEdit;
     rgStart: TRadioGroup;
@@ -66,8 +65,6 @@ Resourcestring
   cstUseDefaultSettings = 'Use default settings';
   cstUseSelection2 = 'Use selection 2';
   cstUseSelection3 = 'Use selection 3';
-
-  //cstSerialLogDir = 'Serial Log File directory';
 
 { TfrmSettings }
 
