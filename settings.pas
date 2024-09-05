@@ -66,6 +66,7 @@ Resourcestring
   cstUseSelection2 = 'Use selection 2';
   cstUseSelection3 = 'Use selection 3';
 
+
 { TfrmSettings }
 
 procedure TfrmSettings.LoadRecourcestrings;
@@ -85,7 +86,6 @@ begin
   rgStart.Items.Add(cstUseDefaultSettings);
   rgStart.Items.Add(cstUseSelection2);
   rgStart.Items.Add(cstUseSelection3);
-
 end;
 
 procedure TfrmSettings.cgSettingsClick(Sender: TObject);

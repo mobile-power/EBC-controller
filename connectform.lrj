@@ -1,6 +1,0 @@
-{"version":1,"strings":[
-{"hash":174410724,"name":"tfrmconnect.caption","sourcebytes":[67,111,110,110,101,99,116],"value":"Connect"},
-{"hash":179097525,"name":"tfrmconnect.devicelabel.caption","sourcebytes":[38,68,101,118,105,99,101],"value":"&Device"},
-{"hash":1371,"name":"tfrmconnect.okbutton.caption","sourcebytes":[79,107],"value":"Ok"},
-{"hash":77089212,"name":"tfrmconnect.cancelbutton.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"}
-]}
