@@ -67,7 +67,7 @@ Resourcestring
   cstUseSelection2 = 'Use selection 2';
   cstUseSelection3 = 'Use selection 3';
 
-  cstSerialLogDir = 'Serial Log File directory';
+  //cstSerialLogDir = 'Serial Log File directory';
 
 { TfrmSettings }
 

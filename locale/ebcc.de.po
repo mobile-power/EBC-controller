@@ -482,15 +482,6 @@ msgstr "Nicht gespeichert"
 msgid "Wait time in seconds:"
 msgstr "Wartezeit in Sekunden:"
 
-#: tfrmabout.button1.caption
-msgctxt "tfrmabout.button1.caption"
-msgid "Ok"
-msgstr "Ok"
-
-#: tfrmabout.caption
-msgid "About"
-msgstr "Über"
-
 #: tfrmconnect.cancelbutton.caption
 msgctxt "tfrmconnect.cancelbutton.caption"
 msgid "Cancel"
@@ -697,8 +688,10 @@ msgid "WH"
 msgstr "WH"
 
 #: tfrmmain.memsteplog.columns[4].title.caption
+#, fuzzy
+#| msgid "Time"
 msgctxt "tfrmmain.memsteplog.columns[4].title.caption"
-msgid "Time"
+msgid "Duration"
 msgstr "Zeit"
 
 #: tfrmmain.memsteplog.columns[5].title.caption
@@ -712,6 +705,14 @@ msgstr "Endspannung"
 #: tfrmmain.memsteplog.columns[7].title.caption
 msgid "End current"
 msgstr "Endstrom"
+
+#: tfrmmain.memsteplog.columns[8].title.caption
+msgid "Start time"
+msgstr ""
+
+#: tfrmmain.memsteplog.columns[9].title.caption
+msgid "End time"
+msgstr ""
 
 #: tfrmmain.mmm_data.caption
 msgid "D&ata"
@@ -873,42 +874,6 @@ msgstr "Schritte"
 #: tfrmmain.tsprogram.hint
 msgid "Steps - Ctrl F3"
 msgstr "Schritte - Strg F3"
-
-#: tfrmsettings.cancelbutton.caption
-msgctxt "tfrmsettings.cancelbutton.caption"
-msgid "Cancel"
-msgstr "Abbrechen"
-
-#: tfrmsettings.caption
-msgctxt "tfrmsettings.caption"
-msgid "Settings"
-msgstr "Einstellungen"
-
-#: tfrmsettings.cgsettings.caption
-msgid "&Misc settings"
-msgstr "&Weitere Einstellungen"
-
-#: tfrmsettings.edtinttime.editlabel.caption
-msgid "&dVdA Int. time (s)"
-msgstr "&dVdA Int. Zeit (s)"
-
-#: tfrmsettings.grpparam.caption
-msgid "Parameters"
-msgstr "Parameter"
-
-#: tfrmsettings.okbutton.caption
-msgctxt "tfrmsettings.okbutton.caption"
-msgid "&Ok"
-msgstr "&Ok"
-
-#: tfrmsettings.rgstart.caption
-msgid "&Startup behavior"
-msgstr "&Startverhalten"
-
-#: tfrmshortcuts.caption
-msgctxt "tfrmshortcuts.caption"
-msgid "Shortcut keys"
-msgstr "Tastaturkürzel"
 
 #: tfrmstep.caption
 msgctxt "tfrmstep.caption"

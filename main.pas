@@ -465,8 +465,9 @@ type
   public
     FPackets: array of TPacket;
   private
-    FSerialLogFileName: string;
+    FSerialLogFile: TextFile;
     FSerialLogDir: string;
+    fSerialLogFileIsOpen: boolean;
     fLogFileIsOpen : boolean;
     fLogFileName : string;
     FPacketIndex: Integer;
@@ -505,7 +506,7 @@ type
     // We're busy doing a state change currently, so don't allow another state change to kick off right now.
     FLoadStepBusy: Boolean;
     procedure DoHexLog(AText: string);
-    procedure HandleSerialDataReceived(const Data: string);
+    procedure UpdateSerialLogDir;
     procedure SerialRec(Sender: TObject);
     function InterpretPackage(APacket: string; ANow: TDateTime) : boolean;
     procedure DumpSerialData(prefix,postfix: string; snd: string; Pos: Integer);
@@ -584,10 +585,6 @@ function  FormatDateTimeISO8601(a_DateTime: TDateTime): string;
 implementation
 
 {$R *.lfm}
-
-var
-  FSerialLogDir: string;  // Global variable to store the serial log directory
-  FSerialLogFileName: string;  // Global variable to store the log file name
 
 const
   cMemStepLog_step   = 0;
@@ -1066,6 +1063,7 @@ procedure TfrmMain.DumpSerialData(prefix,postfix: string; snd: string; Pos: Inte
 var
   s: string;
   I: Integer;
+  output: string;
 begin
   s := '';
   for I := 1 to Length(snd) do
@@ -1074,9 +1072,12 @@ begin
 //    if I < Length(snd) then s := s + '|';
   end;
   if (pos > 0) and (pos <= length(snd)) then
-    DoHexLog(prefix + ' ' + s + ' ' + IntToHex(Ord(checksum(snd, Pos)),2) + ' ' + postfix)
+     output := prefix + ' ' + s + ' ' + IntToHex(Ord(checksum(snd, Pos)),2) + ' ' + postfix
   else
-    DoHexLog(prefix + ' ' + s + ' ' + postfix);
+     output := prefix + ' ' + s + ' ' + postfix;
+  DoHexLog(output);
+  if fSerialLogFileIsOpen then
+     WriteLn(fSerialLogFile, output);
 end;
 
 procedure TfrmMain.SendData(snd: string);
@@ -1202,36 +1203,6 @@ begin
     SaveCSVLine(f, FData[I]);
   Flush(f);
   CloseFile(f);
-end;
-
-procedure TfrmMain.HandleSerialDataReceived(const Data: string);
-var
-  ReceivedData: string;
-  LogFile: TextFile;
-  LogFilePath: string;
-begin
-  // Step 1: Read the data received via the serial port
-  ReceivedData := Serial.ReadData;
-
-  // Step 2: Update the memo with the received data
-  memLog.Lines.Add(ReceivedData);
-
-  // Step 3: Create the log file path using the global variable
-  LogFilePath := FAppDir + FSerialLogFileName;
-
-  // Step 4: Open the log file, append the received data, and close the file
-  AssignFile(LogFile, LogFilePath);
-
-  try
-    if FileExists(LogFilePath) then
-      Append(LogFile)
-    else
-      Rewrite(LogFile);
-
-    WriteLn(LogFile, FormatDateTime('hh:nn:ss', Now) + ' - ' + ReceivedData);
-  finally
-    CloseFile(LogFile);
-  end;
 end;
 
 function TfrmMain.GetHexPacketFromIni(AIniFile: TMyIniFile; ASection: string;
@@ -3088,10 +3059,6 @@ begin
   // Initialize the serial log directory with a default value or load it from settings
   FSerialLogDir := 'C:\Logs\Serial'; // Set a default directory path
   edtSerialLogDir.Text := FSerialLogDir; // Update the text box with the directory
-  // Initialize the serial log file name with today's date
-  FSerialLogFileName := FormatDateTime('YYYYMMDD', Now) + '.log';
-  // Set the event handler for receiving data on the serial port
-  Serial.OnDataReceived := @HandleSerialDataReceived;
 
 
   SetLength(stText, cstMax + 1);
