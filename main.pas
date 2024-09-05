@@ -464,6 +464,8 @@ type
   public
     FPackets: array of TPacket;
   private
+    FSerialLogFile: TextFile;
+    fSerialLogFileIsOpen: boolean;
     fLogFileIsOpen : boolean;
     fLogFileName : string;
     FPacketIndex: Integer;
@@ -502,7 +504,6 @@ type
     // We're busy doing a state change currently, so don't allow another state change to kick off right now.
     FLoadStepBusy: Boolean;
     procedure DoHexLog(AText: string);
-
     procedure SerialRec(Sender: TObject);
     function InterpretPackage(APacket: string; ANow: TDateTime) : boolean;
     procedure DumpSerialData(prefix,postfix: string; snd: string; Pos: Integer);
@@ -782,6 +783,7 @@ begin
       Inc(N, Length(s));
     end;
   until (N >= 19) or (MillisecondsBetween(Now, E) > 200);
+
   // DumpSerialData('<','', rBuf, 0);
   while N >= 19 do
   begin
@@ -995,7 +997,7 @@ begin
 
     // AutoOff check
     if (not (FRunMode in [rmNone, rmMonitor, rmWait, rmLoop])) and
-       ((APacket[2] = FPackets[FPacketIndex].AutoOff) or ((FSampleCounter > 10) and (FLastI < 0.0001)) or (FLastU < 2.45) or (FLastU > 4.25) ) and
+       ((APacket[2] = FPackets[FPacketIndex].AutoOff) or ((FSampleCounter > 10) and (FLastI < 0.0001)) or (FLastU < 2.45) or (FLastU > 4.25)) and
        not FLoadStepBusy
     then
     begin
@@ -1003,7 +1005,7 @@ begin
         // wind back the state machine to try sending them again.
         // Check whether the Ah counter has been reset on the EBC machine:
         DoLog(format(
-            '%s After CHG/DSG params: FSampleCounter = %d, FCurrentCapacity[caEBC] = %s, FindLastAhReadingInMemLog = %s, FLastI = %s, lastPacket.AutoOff = %s',
+            '%s After CHG/DSG params: FSampleCounter = %d, FCurrentCapacity[caEBC] = %s, FindLastAhReadingInMemLog = %s, FLastI = %s, FLastU = %s, lastPacket.AutoOff = %s',
             [FormatDateTimeISO8601(Now()), FSampleCounter, MyFloatStr(FCurrentCapacity[caEBC]), FindLastAhReadingInMemLog(memStepLog), MyFloatStr(FLastI), MyFloatStr(FlastU), FPackets[FPacketIndex].AutoOff]
         ));
         if (FSampleCounter < 300) and // If the CHG/DSG cycle is still in the first 10 seconds, the Ah counter should not have had time to increment significantly
@@ -1018,6 +1020,7 @@ begin
 
         if FInProgram then EBCBreak(false,false) else EBCBreak;
     end;
+
 
     // Cutoff checks
     if (FRunMode = rmCharging) and (FSampleCounter > 10) and not FLoadStepBusy then
@@ -1052,6 +1055,7 @@ procedure TfrmMain.DumpSerialData(prefix,postfix: string; snd: string; Pos: Inte
 var
   s: string;
   I: Integer;
+  output: string;
 begin
   s := '';
   for I := 1 to Length(snd) do
@@ -1060,9 +1064,12 @@ begin
 //    if I < Length(snd) then s := s + '|';
   end;
   if (pos > 0) and (pos <= length(snd)) then
-    DoHexLog(prefix + ' ' + s + ' ' + IntToHex(Ord(checksum(snd, Pos)),2) + ' ' + postfix)
+     output := prefix + ' ' + s + ' ' + IntToHex(Ord(checksum(snd, Pos)),2) + ' ' + postfix
   else
-    DoHexLog(prefix + ' ' + s + ' ' + postfix);
+     output := prefix + ' ' + s + ' ' + postfix;
+  DoHexLog(output);
+  //if fSerialLogFileIsOpen then        commented out as trying new method for logging to serial .txt file
+  //   WriteLn(fSerialLogFile, output);
 end;
 
 procedure TfrmMain.SendData(snd: string);
@@ -1176,8 +1183,6 @@ procedure TfrmMain.SaveCSVLine(var f: TextFile; d: TCSVData);
 begin
   WriteLn(f, d.vTime, ',', MyFloatStr(d.vCurrent), ',', MyFloatStr(d.vVoltage), ',', MyFloatStr(d.CapacityEBC), ',', MyFloatStr(d.CapacityLocal), ',', d.runMode, ',', FormatDateTimeISO8601(d.timestampUTC), ',', d.stepNum);
 end;
-
-
 
 procedure TfrmMain.SaveCSV(AFile: string);
 var
@@ -1449,7 +1454,7 @@ begin
 end;
 
 function TfrmMain.MakePacket2(Packet: Integer; SendMode: TSendMode; TestVal,
-  SecondParam: Extended; ATime: Integer; cutoffCurrent : Extended): string;
+  SecondParam: Extended; ATime: Integer; cutoffCurrent : Extended): string;  // Charging parameters function
 var
   p1, p2, p3: string;
   T: Extended;
@@ -1478,7 +1483,7 @@ begin
       p1 := EncodeCurrent(round2(TestVal,2));      // current
       p2 := EncodeVoltage(round2(SecondParam,2));  // voltage without round we will get 4.219999999 when 4.22 is requested
       P3 := EncodeCurrent(cutoffCurrent);
-      doLog(format('EBC-A20: p1:%g p2:%g p3: %g',[round2(TestVal,2),round2(edtChargeV.Value,2),round2(edtCutA.Value,2)]));
+      doLog(format('Steps: Charge Amps: %g Charge Volts: %g CutAmps: %g',[round2(TestVal,2),round2(edtChargeV.Value,2),round2(edtCutA.Value,2)]));  // print out of parameters - changed txt of printout
     end else
     begin
       if ATime = 250 then  //250 is a forbidden value for some reason
@@ -2125,6 +2130,8 @@ begin
   if memLog.Lines.Count > 40000 then
     memLog.Lines.Delete(0);
   memLog.Lines.Add(AText);
+  if fSerialLogFileIsOpen then     // log to the serial .txt file
+     WriteLn(fSerialLogFile, AText);
   // memLog.VertScrollBar.Position := 1000000;
 end;
 
@@ -2134,14 +2141,15 @@ begin
   if memLog.Lines.Count > 40000 then
     memLog.Lines.Delete(0);
   memLog.Lines.Add(AText);
-
+  if fSerialLogFileIsOpen then // log to the serial .txt file
+     WriteLn(fSerialLogFile, AText);
   // memLog.VertScrollBar.Position := 1000000;
 //  SendMessage(memLog.Handle, WM_VSCROLL, SB_BOTTOM, 0);
 end;
 
 function TfrmMain.StartLogging : boolean;
 var
-  fileName,fileDir : string;
+  fileName,fileDir, serialLogFilename : string;
   err,i : integer;
   prefix : string;
 begin
@@ -2154,7 +2162,6 @@ begin
     begin
       // build a file name
       fileName := FormatDateTime('YYYY-MM-DD_HHMMSS',Now) + '_C' + GetAdjustedCycleNum() + '.csv';
-
       // prefix taksbar name if enabled in settings
       if frmSettings.cgSettings.Checked[cTaskbarCsvPrefix] then
         if Caption <> cDefaultCaption then
@@ -2193,7 +2200,7 @@ begin
       if MessageDlg(cFileExists,format(cFileOverwrite,[fileName]), mtConfirmation,[mbYes, mbNo],0) <> mrYes then
         exit;
 
-    // open log file
+    // open the main log file (CSV)
     InOutRes := 0;
     AssignFile(FLogFile, fileName);
     rewrite(FLogFile);
@@ -2203,6 +2210,7 @@ begin
        MessageDlg(cError,Format(cUnableToCreateLogFile,[fileName,err]), mtError,[mbAbort],0);
        exit;
     end;
+    // Write header to the main log file (CSV)
     writeln(FlogFile,'uptime_seconds,current,voltage,capacity_ebc_wh,capacity_local_wh,run_mode,timestamp,step_num');
     err := ioresult;
     if (err <> 0) then
@@ -2214,6 +2222,19 @@ begin
     setStatusLine(cst_LogFileName,fileName);
     fLogFileIsOpen := true;
     fLogFileName := fileName;
+
+    // Now create and open the serial log file
+    serialLogFileName := ChangeFileExt(fileName, '.serial.txt');
+    AssignFile(FSerialLogFile, serialLogFileName);
+    Rewrite(FSerialLogFile);
+    err := IOResult;
+    if (err <> 0) then
+    begin
+      MessageDlg(cError, Format(cUnableToCreateLogFile, [serialLogFileName, err]), mtError, [mbAbort], 0);
+      exit;
+    end;
+    fSerialLogFileIsOpen := True;
+
     result := true;
   end else
     exit(true);
@@ -2221,16 +2242,28 @@ end;
 
 procedure TfrmMain.StopLogging;
 begin
-  fLogFileIsOpen := false;
+  // Close the main log file (CSV)
   if fLogFileIsOpen then
   begin
     InOutRes := 0;
     Flush(FLogFile);
     CloseFile(FLogFile);
     if IOResult <> 0 then
-      MessageDlg(cError,Format(cErrorClosingLogfile,[IOResult]), mtError,[mbAbort],0);
-    setStatusLine(cst_LogFileName,'');
+      MessageDlg(cError, Format(cErrorClosingLogfile, [IOResult]), mtError, [mbAbort], 0);
+    setStatusLine(cst_LogFileName, '');
     fLogFileName := '';
+    fLogFileIsOpen := False;
+  end;
+
+  // Close the serial log file
+  if fSerialLogFileIsOpen then
+  begin
+    InOutRes := 0;
+    Flush(FSerialLogFile);
+    CloseFile(FSerialLogFile);
+    if IOResult <> 0 then
+      MessageDlg(cError, Format(cErrorClosingLogfile, [IOResult]), mtError, [mbAbort], 0);
+    fSerialLogFileIsOpen := False;
   end;
 end;
 
