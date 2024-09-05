@@ -997,7 +997,7 @@ begin
 
     // AutoOff check
     if (not (FRunMode in [rmNone, rmMonitor, rmWait, rmLoop])) and
-       ((APacket[2] = FPackets[FPacketIndex].AutoOff) or ((FSampleCounter > 10) and (FLastI < 0.0001)) or (FLastU < 2.45) or (FLastU > 4.25) ) and
+       ((APacket[2] = FPackets[FPacketIndex].AutoOff) or ((FSampleCounter > 10) and (FLastI < 0.0001)) or (FLastU < 2.45) or (FLastU > 4.25)) and
        not FLoadStepBusy
     then
     begin
@@ -1005,7 +1005,7 @@ begin
         // wind back the state machine to try sending them again.
         // Check whether the Ah counter has been reset on the EBC machine:
         DoLog(format(
-            '%s After CHG/DSG params: FSampleCounter = %d, FCurrentCapacity[caEBC] = %s, FindLastAhReadingInMemLog = %s, FLastI = %s, lastPacket.AutoOff = %s',
+            '%s After CHG/DSG params: FSampleCounter = %d, FCurrentCapacity[caEBC] = %s, FindLastAhReadingInMemLog = %s, FLastI = %s, FLastU = %s, lastPacket.AutoOff = %s',
             [FormatDateTimeISO8601(Now()), FSampleCounter, MyFloatStr(FCurrentCapacity[caEBC]), FindLastAhReadingInMemLog(memStepLog), MyFloatStr(FLastI), MyFloatStr(FlastU), FPackets[FPacketIndex].AutoOff]
         ));
         if (FSampleCounter < 300) and // If the CHG/DSG cycle is still in the first 10 seconds, the Ah counter should not have had time to increment significantly
@@ -1019,6 +1019,13 @@ begin
         end;
 
         if FInProgram then EBCBreak(false,false) else EBCBreak;
+    end;
+
+    // Adding in a hard voltage limit check
+    if (FLastU < 2.45) or (FLastU > 4.25) then // EBC can't go below 2.45V or above 4.25V
+    begin
+      DoLog(format('%s Voltage out of bounds: FlastU = %s', [FormatDateTimeISO8601(Now()), MyFloatStr(FLastU)]));  // Print Error
+      EBCBreak;  // Stops the cycler
     end;
 
     // Cutoff checks
@@ -1453,7 +1460,7 @@ begin
 end;
 
 function TfrmMain.MakePacket2(Packet: Integer; SendMode: TSendMode; TestVal,
-  SecondParam: Extended; ATime: Integer; cutoffCurrent : Extended): string;
+  SecondParam: Extended; ATime: Integer; cutoffCurrent : Extended): string;  // Charging parameters function
 var
   p1, p2, p3: string;
   T: Extended;
@@ -1482,7 +1489,7 @@ begin
       p1 := EncodeCurrent(round2(TestVal,2));      // current
       p2 := EncodeVoltage(round2(SecondParam,2));  // voltage without round we will get 4.219999999 when 4.22 is requested
       P3 := EncodeCurrent(cutoffCurrent);
-      doLog(format('EBC-A20: p1:%g p2:%g p3: %g',[round2(TestVal,2),round2(edtChargeV.Value,2),round2(edtCutA.Value,2)]));
+      doLog(format('Commands: ChargeI:%g ChargeV:%g CutA:%g',[round2(TestVal,2),round2(edtChargeV.Value,2),round2(edtCutA.Value,2)]));  // print out of parameters - changed txt of printout
     end else
     begin
       if ATime = 250 then  //250 is a forbidden value for some reason
