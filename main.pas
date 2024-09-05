@@ -995,7 +995,7 @@ begin
 
     // AutoOff check
     if (not (FRunMode in [rmNone, rmMonitor, rmWait, rmLoop])) and
-       ((APacket[2] = FPackets[FPacketIndex].AutoOff) or ((FSampleCounter > 10) and (FLastI < 0.0001))) and
+       ((APacket[2] = FPackets[FPacketIndex].AutoOff) or ((FSampleCounter > 10) and (FLastI < 0.0001)) or (FLastU < 2.45) or (FLastU > 4.25) ) and
        not FLoadStepBusy
     then
     begin
@@ -1004,10 +1004,11 @@ begin
         // Check whether the Ah counter has been reset on the EBC machine:
         DoLog(format(
             '%s After CHG/DSG params: FSampleCounter = %d, FCurrentCapacity[caEBC] = %s, FindLastAhReadingInMemLog = %s, FLastI = %s, lastPacket.AutoOff = %s',
-            [FormatDateTimeISO8601(Now()), FSampleCounter, MyFloatStr(FCurrentCapacity[caEBC]), FindLastAhReadingInMemLog(memStepLog), MyFloatStr(FLastI), FPackets[FPacketIndex].AutoOff]
+            [FormatDateTimeISO8601(Now()), FSampleCounter, MyFloatStr(FCurrentCapacity[caEBC]), FindLastAhReadingInMemLog(memStepLog), MyFloatStr(FLastI), MyFloatStr(FlastU), FPackets[FPacketIndex].AutoOff]
         ));
         if (FSampleCounter < 300) and // If the CHG/DSG cycle is still in the first 10 seconds, the Ah counter should not have had time to increment significantly
-           (MyFloatStr(FCurrentCapacity[caEBC]) = FindLastAhReadingInMemLog(memStepLog)) // The current reading hasn't changed since the last CHG/DSG step
+           (MyFloatStr(FCurrentCapacity[caEBC]) = FindLastAhReadingInMemLog(memStepLog)) and
+           ((FLastU > 2.45) or (FLastU < 4.25)) // The current reading hasn't changed since the last CHG/DSG step
         then
         begin
             // Retry the charge/discharge, the EBC probably failed to do it. The EBCBreak call below will kick off this command.
