@@ -465,7 +465,6 @@ type
     FPackets: array of TPacket;
   private
     FSerialLogFile: TextFile;
-    FSerialLogDir: string;
     fSerialLogFileIsOpen: boolean;
     fLogFileIsOpen : boolean;
     fLogFileName : string;
@@ -3047,9 +3046,6 @@ begin
   Serial.Parity := pOdd;
   Serial.RcvLineCRLF:=false;
   Serial.StopBits:=sbOne;
-
-  // Initialize the serial log directory with a default value or load it from settings
-  FSerialLogDir := 'C:\Logs\Serial'; // Set a default directory path
 
 
   SetLength(stText, cstMax + 1);
