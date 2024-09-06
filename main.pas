@@ -1487,7 +1487,7 @@ begin
       p1 := EncodeCurrent(round2(TestVal,2));      // current
       p2 := EncodeVoltage(round2(SecondParam,2));  // voltage without round we will get 4.219999999 when 4.22 is requested
       P3 := EncodeCurrent(cutoffCurrent);
-      doLog(format('Steps: Charge Amps: %g Charge Volts: %g CutAmps: %g',[round2(TestVal,2),round2(edtChargeV.Value,2),round2(edtCutA.Value,2)]));  // print out of parameters - changed txt of printout
+      doLog(format('Steps: Charge Amps: %g, Charge Volts: %g, CutAmps: %g',[round2(TestVal,2),round2(edtChargeV.Value,2),round2(edtCutA.Value,2)]));  // print out of parameters - changed txt of printout
     end else
     begin
       if ATime = 250 then  //250 is a forbidden value for some reason
