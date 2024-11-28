@@ -843,6 +843,7 @@ begin
     Result := ''; // Default return value if we don't find anything
 end;
 
+
 function TfrmMain.InterpretPackage(APacket: string; ANow: TDateTime) : boolean;
 var
   P, tmp: Extended;
@@ -903,12 +904,26 @@ begin
     //  stText[cstCapacity].Caption := 'See device';  // FIXME, AD: fixed GetCharge
 
     stText[cstCapLocal].Caption := GetCharge(FCurrentCapacity[caLocal]) + '(PC)';
+    // below calculation used to calculate the incremental energy based on power (P) and time (dT) ???
     tmp := (P * dT) / 3600000;
+
     if ValOk(tmp) then
     begin
       FEnergy := FEnergy + tmp;
       stText[cstEnergy].Caption := GetEnergy(FEnergy);
-    end;
+      // Check for cutoff energy during discharge
+      if (FRunMode in [rmDischarging, rmDischargingCR]) and (FChecks.cEnergy > 0) then
+      begin
+          if FEnergy >= FChecks.cEnergy then
+          begin
+              DoLog(Format('%s Cutoff Energy Reached: %s', [FormatDateTimeISO8601(Now()), GetEnergy(FChecks.cEnergy)]));
+              if FInProgram then
+                  EBCBreak(False, False) // Stop if in program mode
+              else
+                  EBCBreak; // Stop the discharge process
+          end;
+      end;
+      end;
     stText[cstTime].Caption := MyTimeToStr(T);
 
     if FLastI <> 0 then
@@ -1028,7 +1043,7 @@ begin
       DoLog(format('%s Voltage out of bounds: FlastU = %s', [FormatDateTimeISO8601(Now()), MyFloatStr(FLastU)]));
     end;
 
-    // Cutoff checks
+    // Cutoff checks - for ending charging ???
     if (FRunMode = rmCharging) and (FSampleCounter > 10) and not FLoadStepBusy then
     begin
       if FLastI < FChecks.cCurrent then
@@ -1056,6 +1071,10 @@ begin
     DumpSerialData('<','CRC '+cError+':', APacket, crcrecvpos);
   end;
 end;
+
+
+
+
 
 procedure TfrmMain.DumpSerialData(prefix,postfix: string; snd: string; Pos: Integer);
 var
@@ -2087,7 +2106,10 @@ begin
   FChecks.cEnergy := cNaN;
   if chkCutEnergy.Checked then
   begin
+    // This is where the value in the Cutoff energy edit box is assigned
     FChecks.cEnergy := edtCutEnergy.Value;
+    // log to the serial console that the correct cut off energy value has been assigned to FChecks.cEnergy
+    DoLog(format('%s - Cutoff Energy of %s assigned to FChecks.cEnergy variable', [FormatDateTimeISO8601(Now()), FloatToStr(FChecks.cEnergy)]));
     if FChecks.cEnergy < 0.0001 then
       chkCutEnergy.Checked := False;
   end;
@@ -2919,6 +2941,7 @@ begin
   OffSetting;
 end;
 
+// this procedure checks if the Cutoff Capacity checkbox is checked
 procedure TfrmMain.chkCutCapChange(Sender: TObject);
 begin
   if chkCutCap.Checked then
@@ -2932,12 +2955,16 @@ begin
   end;
 end;
 
+// this procedure checks if the Cutoff Energy checkbox is checked
+// if so, the edit box of the value is enabled
 procedure TfrmMain.chkCutEnergyChange(Sender: TObject);
 begin
   if chkCutEnergy.Checked then
   begin
     edtCutEnergy.Enabled := True;
     lblCutEnergy.Enabled := True;
+    // log in serial console that the Cutoff Energy box has become checked
+    DoLog(format('Cutoff Energy box has become checked'));
   end else
   begin
     edtCutEnergy.Enabled := False;
