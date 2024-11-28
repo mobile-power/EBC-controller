@@ -2964,7 +2964,7 @@ begin
     edtCutEnergy.Enabled := True;
     lblCutEnergy.Enabled := True;
     // log in serial console that the Cutoff Energy box has become checked
-    DoLog(format('Cutoff Energy box has become checked'));
+    DoLog('Cutoff Energy box has become checked');
   end else
   begin
     edtCutEnergy.Enabled := False;
