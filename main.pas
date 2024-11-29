@@ -296,11 +296,13 @@ type
     ChartToolset1: TChartToolset;
     ChartToolset1ZoomMouseWheelTool1: TZoomMouseWheelTool;
     chkCutCap: TCheckBox;
-    chkCutEnergy: TCheckBox;
+    chkCutEnergyDischarge: TCheckBox; // tickbox for discharge energy limiting
+    chkCutEnergyCharge: TCheckBox;
     edtCycleStartNumber: TSpinEdit;
     edtDelim: TEdit;
     edtTestVal: TFloatSpinEdit;
-    edtCutEnergy: TFloatSpinEdit;
+    edtCutEnergyDischarge: TFloatSpinEdit;
+    edtCutEnergyCharge: TFloatSpinEdit;
     edtCutCap: TFloatSpinEdit;
     edtCutV: TFloatSpinEdit;
     edtChargeV: TFloatSpinEdit;
@@ -315,14 +317,15 @@ type
     lblCells: TLabel;
     lblCutCap2: TLabel;
     lblCutCap3: TLabel;
-    lblCutEnergy2: TLabel;
+    lblCutEnergyDischarge2: TLabel;
     lblCutTime: TLabel;
     lblTestVal: TLabel;
     lblCapI: TLabel;
     lblProgTime: TLabel;
     Label10: TLabel;
     lblCutCap: TLabel;
-    lblCutEnergy: TLabel;
+    lblCutEnergyDischarge: TLabel;
+    lblCutEnergyCharge: TLabel;
     lblCutoffV1: TLabel;
     lblMin: TLabel;
     lblStep: TLabel;
@@ -431,7 +434,8 @@ type
     function doProgramCchecks : boolean;
     procedure btnStopClick(Sender: TObject);
     procedure chkCutCapChange(Sender: TObject);
-    procedure chkCutEnergyChange(Sender: TObject);
+    procedure chkCutEnergyDischargeChange(Sender: TObject);
+    procedure chkCutEnergyChargeChange(Sender: TObject);
 
     procedure edtCutTimeChange(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -1713,8 +1717,10 @@ begin
   edtCutM.Enabled := False;
   edtTestVal.Enabled := False;
   edtCutTime.Enabled := False;
-  edtCutEnergy.Enabled := False;
-  chkCutEnergy.Enabled := False;
+  edtCutEnergyDischarge.Enabled := False;
+  chkCutEnergyDischarge.Enabled := False;
+  edtCutEnergyCharge.Enabled := False;
+  chkCutEnergyCharge.Enabled := False;
   edtCutCap.Enabled := False;
   chkCutCap.Enabled := False;
   edtCutV.Enabled := False;
@@ -1733,8 +1739,10 @@ begin
   edtCutM.Enabled := True;
   edtTestVal.Enabled := True;
   edtCutTime.Enabled := True;
-  edtCutEnergy.Enabled := True;
-  chkCutEnergy.Enabled := True;
+  edtCutEnergyDischarge.Enabled := True;
+  chkCutEnergyDischarge.Enabled := True;
+  edtCutEnergyCharge.Enabled := True;
+  chkCutEnergyCharge.Enabled := True;
   edtCutCap.Enabled := True;
   chkCutCap.Enabled := True;
   edtCutV.Enabled := True;
@@ -2104,14 +2112,14 @@ begin
       chkCutCap.Checked := False;
   end;
   FChecks.cEnergy := cNaN;
-  if chkCutEnergy.Checked then
+  if chkCutEnergyDischarge.Checked then
   begin
     // This is where the value in the Cutoff energy edit box is assigned
-    FChecks.cEnergy := edtCutEnergy.Value;
+    FChecks.cEnergy := edtCutEnergyDischarge.Value;
     // log to the serial console that the correct cut off energy value has been assigned to FChecks.cEnergy
-    DoLog(format('%s - Cutoff Energy of %s assigned to FChecks.cEnergy variable', [FormatDateTimeISO8601(Now()), FloatToStr(FChecks.cEnergy)]));
+    DoLog(format('%s - Discharge Cutoff Energy of %s assigned to FChecks.cEnergy variable', [FormatDateTimeISO8601(Now()), FloatToStr(FChecks.cEnergy)]));
     if FChecks.cEnergy < 0.0001 then
-      chkCutEnergy.Checked := False;
+      chkCutEnergyDischarge.Checked := False;
   end;
   DoLog('cCurrent: ' + FloatToStr(FChecks.cCurrent));
   DoLog('Time: ' + IntToStr(FChecks.cDwellTime));
@@ -2470,8 +2478,8 @@ begin
         end;
         if DoUpdate then
         begin
-          edtCutEnergy.Value := CutEnergy;
-          chkCutEnergy.Checked := CutEnergy > 0.0001;
+          edtCutEnergyDischarge.Value := CutEnergyDischarge;
+          chkCutEnergyDischarge.Checked := CutEnergyDischarge > 0.0001;
           edtCutCap.Value := CutCap;
           chkCutCap.Checked := CutCap > 0.0001;
           edtTestVal.Value := TestVal;
@@ -2957,18 +2965,37 @@ end;
 
 // this procedure checks if the Cutoff Energy checkbox is checked
 // if so, the edit box of the value is enabled
-procedure TfrmMain.chkCutEnergyChange(Sender: TObject);
+// This procedure is specific to the discharge
+procedure TfrmMain.chkCutEnergyDischargeChange(Sender: TObject);
 begin
-  if chkCutEnergy.Checked then
+  if chkCutEnergyDischarge.Checked then
   begin
-    edtCutEnergy.Enabled := True;
-    lblCutEnergy.Enabled := True;
-    // log in serial console that the Cutoff Energy box has become checked
-    DoLog('Cutoff Energy box has become checked');
+    edtCutEnergyDischarge.Enabled := True;
+    lblCutEnergyDischarge.Enabled := True;
+    // log in serial console that the Cutoff Energy box for Discharge has become checked
+    DoLog('Cutoff Energy box for Discharge has become checked');
   end else
   begin
-    edtCutEnergy.Enabled := False;
-    lblCutEnergy.Enabled := False;
+    edtCutEnergyDischarge.Enabled := False;
+    lblCutEnergyDischarge.Enabled := False;
+  end;
+end;
+
+
+// This procedure checks if the Cutoff Energy (Charge) checkbox is checked
+// If so, the edit box for the value is enabled
+procedure TfrmMain.chkCutEnergyChargeChange(Sender: TObject);
+begin
+  if chkCutEnergyCharge.Checked then
+  begin
+    edtCutEnergyCharge.Enabled := True;
+    lblCutEnergyCharge.Enabled := True;
+    // Log in serial console that the Cutoff Energy (Charge) box has become checked
+    DoLog('Cutoff Energy (Charge) box has become checked');
+  end else
+  begin
+    edtCutEnergyCharge.Enabled := False;
+    lblCutEnergyCharge.Enabled := False;
   end;
 end;
 
@@ -3179,19 +3206,19 @@ begin
   // anchoring will not allign correct so do it here
 
   newTop := edtTestVal.Top + edtTestVal.Height + 4;
-  lblCutEnergy2.Top := newTop;
+  lblCutEnergyDischarge2.Top := newTop;
   lblCutCap2.Top := newTop;
-  chkCutEnergy.Top := newTop;
+  chkCutEnergyDischarge.Top := newTop;
   chkCutCap.Top := newTop;
 
-  newTop := newTop + lblCutEnergy2.Height + 4;
-  edtCutEnergy.Top := newTop;
+  newTop := newTop + lblCutEnergyDischarge2.Height + 4;
+  edtCutEnergyDischarge.Top := newTop;
   edtCutCap.Top := newTop;
-  newTop := newTop + (edtCutEnergy.Height div 2);
-  lblCutEnergy.Top := newTop;
+  newTop := newTop + (edtCutEnergyDischarge.Height div 2);
+  lblCutEnergyDischarge.Top := newTop;
   lblCutCap.Top := newTop;
 
-  newTop := edtCutEnergy.Top + edtCutEnergy.Height + 4;
+  newTop := edtCutEnergyDischarge.Top + edtCutEnergyDischarge.Height + 4;
   btnStart.Top := newTop;
   btnStop.Top := newTop;
   tbxMonitor.Top := newTop;

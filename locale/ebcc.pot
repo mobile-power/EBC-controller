@@ -844,6 +844,94 @@ msgstr ""
 msgid "Steps - Ctrl F3"
 msgstr ""
 
+#: tfrmshortcuts.caption
+msgctxt "tfrmshortcuts.caption"
+msgid "Shortcut keys"
+msgstr ""
+
+#: tfrmstep.caption
+msgctxt "tfrmstep.caption"
+msgid "Unsaved"
+msgstr ""
+
+#: tfrmstep.edtdevicelabel.caption
+msgid "Devic&e:"
+msgstr ""
+
+#: tfrmstep.menuitem1.caption
+msgctxt "tfrmstep.menuitem1.caption"
+msgid "&File"
+msgstr ""
+
+#: tfrmstep.menuitem10.caption
+msgid "NiCd"
+msgstr ""
+
+#: tfrmstep.menuitem11.caption
+msgid "NiMH"
+msgstr ""
+
+#: tfrmstep.menuitem12.caption
+msgid "LiPo"
+msgstr ""
+
+#: tfrmstep.menuitem13.caption
+msgid "LiFePO4"
+msgstr ""
+
+#: tfrmstep.menuitem14.caption
+msgid "Lead Acid"
+msgstr ""
+
+#: tfrmstep.menuitem15.caption
+msgid "CCCV"
+msgstr ""
+
+#: tfrmstep.menuitem16.caption
+msgid "Wait"
+msgstr ""
+
+#: tfrmstep.menuitem17.caption
+msgid "Loop"
+msgstr ""
+
+#: tfrmstep.menuitem8.caption
+msgid "CC discharge"
+msgstr ""
+
+#: tfrmstep.menuitem9.caption
+msgid "CP discharge"
+msgstr ""
+
+#: tfrmstep.mniadd.caption
+msgid "&Add"
+msgstr ""
+
+#: tfrmstep.mniexit.caption
+msgid "&Exit"
+msgstr ""
+
+#: tfrmstep.mninew.caption
+msgid "&New"
+msgstr ""
+
+#: tfrmstep.mniopen.caption
+msgid "&Open"
+msgstr ""
+
+#: tfrmstep.mnisave.caption
+msgid "&Save"
+msgstr ""
+
+#: tfrmstep.mnisaveas.caption
+msgid "Save &As..."
+msgstr ""
+
+#: tfrmstep.okbutton.caption
+msgctxt "tfrmstep.okbutton.caption"
+msgid "&Ok"
+msgstr ""
+
 #: tfrmstepadd_loop.cancelbutton.caption
 msgctxt "tfrmstepadd_loop.cancelbutton.caption"
 msgid "Cancel"

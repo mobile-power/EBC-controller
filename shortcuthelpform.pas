@@ -168,7 +168,7 @@ begin
   addKeyC(frmMain.edtCutA);
   addKeyC(frmMain.edtCutM);
   addKeyC(frmMain.edtCutTime);
-  addKeyC(frmMain.edtCutEnergy);
+  addKeyC(frmMain.edtCutEnergyDischarge);
   addKeyC(frmMain.edtCutCap);
 
   addHead(csk_Run);
