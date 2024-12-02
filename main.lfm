@@ -243,15 +243,6 @@ object frmMain: TfrmMain
     end
 
 
-
-    object SplitterTop: TSplitter
-      Align = alTop
-      Height = 5
-      Cursor = crVSplit
-      ResizeAnchor = akBottom
-    end
-
-
     object gbControl: TGroupBox
       Align = alClient
       Caption = 'Control'
