@@ -221,6 +221,9 @@ object frmMain: TfrmMain
       ResizeAnchor = akBottom
     end
   end
+
+
+
   object RightPanel: TPanel
     Left = 1424
     Height = 657
@@ -241,11 +244,19 @@ object frmMain: TfrmMain
 
 
 
+    object SplitterTop: TSplitter
+      Align = alTop
+      Height = 5
+      Cursor = crVSplit
+      ResizeAnchor = akBottom
+    end
+
+
 
 
     object pcProgram: TPageControl
-      AnchorSideBottom.Control = gbSettings
-      Left = 8
+      Align = alClient
+      AnchorSideBottom.Control = SplitterSettings
       Height = 100
       Hint = 'Steps: Scripted charge and discharge  cycles'
       Top = 176
@@ -623,6 +634,10 @@ object frmMain: TfrmMain
         end
       end
     end
+
+
+
+
     object SplitterSettings: TSplitter
       Align = alBottom
       Cursor = crVSplit
@@ -638,8 +653,11 @@ object frmMain: TfrmMain
 
 
     object gbSettings: TGroupBox
+      AnchorSideTop.Control = SplitterSettings
+      AnchorSideTop.Side = asrBottom
       Align = alBottom
-      Anchors = [akLeft, akRight]
+      Height = 300
+      Anchors = [akLeft, akRight, akBottom]
       BorderSpacing.Right = 2
       Caption = 'Settings'
       TabOrder = 1
