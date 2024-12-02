@@ -317,7 +317,7 @@ type
     lblCells: TLabel;
     lblCutCap2: TLabel;
     lblCutCap3: TLabel;
-    lblCutEnergyDischarge2: TLabel;
+    lblCutEnergyDischargeUnit: TLabel;
     lblCutTime: TLabel;
     lblTestVal: TLabel;
     lblCapI: TLabel;
@@ -3205,26 +3205,26 @@ begin
   // the edit boxes are different in height on Windows and Linux
   // anchoring will not allign correct so do it here
 
-  newTop := edtTestVal.Top + edtTestVal.Height + 4;
-  lblCutEnergyDischarge2.Top := newTop;
-  lblCutCap2.Top := newTop;
-  chkCutEnergyDischarge.Top := newTop;
-  chkCutCap.Top := newTop;
+  //newTop := edtTestVal.Top + edtTestVal.Height + 4;
+  //lblCutEnergyDischargeUnit.Top := newTop;
+  //lblCutCap2.Top := newTop;
+  //chkCutEnergyDischarge.Top := newTop;
+  //chkCutCap.Top := newTop;
 
-  newTop := newTop + lblCutEnergyDischarge2.Height + 4;
-  edtCutEnergyDischarge.Top := newTop;
-  edtCutCap.Top := newTop;
-  newTop := newTop + (edtCutEnergyDischarge.Height div 2);
-  lblCutEnergyDischarge.Top := newTop;
-  lblCutCap.Top := newTop;
+  //newTop := newTop + lblCutEnergyDischargeUnit.Height + 4;
+  //edtCutEnergyDischarge.Top := newTop;
+  //edtCutCap.Top := newTop;
+  //newTop := newTop + (edtCutEnergyDischarge.Height div 2);
+  //lblCutEnergyDischarge.Top := newTop;
+  //lblCutCap.Top := newTop;
 
-  newTop := edtCutEnergyDischarge.Top + edtCutEnergyDischarge.Height + 4;
-  btnStart.Top := newTop;
-  btnStop.Top := newTop;
-  tbxMonitor.Top := newTop;
-  newTop := newTop + btnStart.Height;
-  btnCont.Top := newTop;
-  btnAdjust.Top := newTop;
+  //newTop := edtCutEnergyDischarge.Top + edtCutEnergyDischarge.Height + 4;
+  //btnStart.Top := newTop;
+  //btnStop.Top := newTop;
+  //tbxMonitor.Top := newTop;
+  //newTop := newTop + btnStart.Height;
+  //btnCont.Top := newTop;
+  //btnAdjust.Top := newTop;
 
   // does not work under Windows ?
   gbSettings.Height := tbxMonitor.Top + tbxMonitor.Height + 8;
