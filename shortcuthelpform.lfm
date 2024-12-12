@@ -7,7 +7,7 @@ object frmShortcuts: TfrmShortcuts
   ClientHeight = 240
   ClientWidth = 320
   OnCreate = FormCreate
-  LCLVersion = '3.0.0.2'
+  LCLVersion = '3.4.0.0'
   object IpHtmlPanel1: TIpHtmlPanel
     Left = 0
     Height = 240

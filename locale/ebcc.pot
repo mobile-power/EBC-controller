@@ -472,34 +472,6 @@ msgstr ""
 msgid "Wait time in seconds:"
 msgstr ""
 
-#: tfrmabout.button1.caption
-msgctxt "tfrmabout.button1.caption"
-msgid "Ok"
-msgstr ""
-
-#: tfrmabout.caption
-msgid "About"
-msgstr ""
-
-#: tfrmconnect.cancelbutton.caption
-msgctxt "tfrmconnect.cancelbutton.caption"
-msgid "Cancel"
-msgstr ""
-
-#: tfrmconnect.caption
-msgctxt "tfrmconnect.caption"
-msgid "Connect"
-msgstr ""
-
-#: tfrmconnect.devicelabel.caption
-msgid "&Device"
-msgstr ""
-
-#: tfrmconnect.okbutton.caption
-msgctxt "tfrmconnect.okbutton.caption"
-msgid "Ok"
-msgstr ""
-
 #: tfrmmain.btnadjust.caption
 msgid "Adjust"
 msgstr ""
@@ -688,7 +660,7 @@ msgstr ""
 
 #: tfrmmain.memsteplog.columns[4].title.caption
 msgctxt "tfrmmain.memsteplog.columns[4].title.caption"
-msgid "Time"
+msgid "Duration"
 msgstr ""
 
 #: tfrmmain.memsteplog.columns[5].title.caption
@@ -701,6 +673,14 @@ msgstr ""
 
 #: tfrmmain.memsteplog.columns[7].title.caption
 msgid "End current"
+msgstr ""
+
+#: tfrmmain.memsteplog.columns[8].title.caption
+msgid "Start time"
+msgstr ""
+
+#: tfrmmain.memsteplog.columns[9].title.caption
+msgid "End time"
 msgstr ""
 
 #: tfrmmain.mmm_data.caption
@@ -864,37 +844,6 @@ msgstr ""
 msgid "Steps - Ctrl F3"
 msgstr ""
 
-#: tfrmsettings.cancelbutton.caption
-msgctxt "tfrmsettings.cancelbutton.caption"
-msgid "Cancel"
-msgstr ""
-
-#: tfrmsettings.caption
-msgctxt "tfrmsettings.caption"
-msgid "Settings"
-msgstr ""
-
-#: tfrmsettings.cgsettings.caption
-msgid "&Misc settings"
-msgstr ""
-
-#: tfrmsettings.edtinttime.editlabel.caption
-msgid "&dVdA Int. time (s)"
-msgstr ""
-
-#: tfrmsettings.grpparam.caption
-msgid "Parameters"
-msgstr ""
-
-#: tfrmsettings.okbutton.caption
-msgctxt "tfrmsettings.okbutton.caption"
-msgid "&Ok"
-msgstr ""
-
-#: tfrmsettings.rgstart.caption
-msgid "&Startup behavior"
-msgstr ""
-
 #: tfrmshortcuts.caption
 msgctxt "tfrmshortcuts.caption"
 msgid "Shortcut keys"
@@ -955,7 +904,6 @@ msgid "CP discharge"
 msgstr ""
 
 #: tfrmstep.mniadd.caption
-msgctxt "tfrmstep.mniadd.caption"
 msgid "&Add"
 msgstr ""
 

@@ -55,7 +55,7 @@ type
     CutTime: Integer;
     CutAmpTime: Integer;  // Cut N minutes after current < CutAmp
     CutCap: Extended;
-    CutEnergy: Extended;
+    CutEnergyDischarge: Extended;
     Loop: Integer;
     LoopCounter: Integer;
     CapI: Boolean;        // Loop as long as capacity increases
@@ -99,6 +99,7 @@ type
     StatusPanel: TPanel;
     sdSave: TSaveDialog;
     SynStepHighlighter: TSynAnySyn;
+    procedure lblXYClick(Sender: TObject);
     procedure memStepStatusChange(Sender: TObject; Changes: TSynStatusChanges);
     procedure setDevice(deviceName : string);
     procedure edtDeviceChange(Sender: TObject);
@@ -290,7 +291,7 @@ begin
           FSteps[N].CutTime := 0;
           FSteps[N].CutVolt := 0;
           FSteps[N].CutCap := 0;
-          FSteps[N].CutEnergy := 0;
+          FSteps[N].CutEnergyDischarge := 0;
           FSteps[N].CapI := False;
           FSteps[N].EneI := False;
           FSteps[N].LoopCounter := 0;
@@ -311,7 +312,7 @@ begin
                   begin
                     case p_Ids(pm) of
                       id_p_cap    : FSteps[N].cutCap := pa.tkValue;
-                      id_p_energy : FSteps[N].CutEnergy := pa.tkValue;
+                      id_p_energy : FSteps[N].CutEnergyDischarge := pa.tkValue;
                       id_p_time   : FSteps[N].CutTime := trunc(pa.tkValue);
                       id_p_cells  : FSteps[N].Cells := trunc(pa.tkValue);
                       id_p_curr   : FSteps[N].TestVal := pa.tkValue;
@@ -333,7 +334,7 @@ begin
                     FSteps[N].CV := frmMain.FPackets[tk].VoltInfo;
                     case p_Ids(pm) of
                       id_p_cap    : FSteps[N].cutCap := pa.tkValue;
-                      id_p_energy : FSteps[N].CutEnergy := pa.tkValue;
+                      id_p_energy : FSteps[N].CutEnergyDischarge := pa.tkValue;
                       id_p_time   : FSteps[N].CutTime := trunc(pa.tkValue);
                       id_p_cells  : FSteps[N].Cells := trunc(pa.tkValue);
                       id_p_curr   : FSteps[N].TestVal := pa.tkValue;
@@ -359,7 +360,7 @@ begin
                   begin
                     case p_Ids(pm) of
                       id_p_cap    : FSteps[N].cutCap := pa.tkValue;
-                      id_p_energy : FSteps[N].CutEnergy := pa.tkValue;
+                      id_p_energy : FSteps[N].CutEnergyDischarge := pa.tkValue;
                       id_p_time   : FSteps[N].CutTime := trunc(pa.tkValue);
                       id_p_cutv   : FSteps[N].CutVolt := pa.tkValue;
                       id_p_curr	: FSteps[N].TestVal := pa.tkValue;
@@ -376,7 +377,7 @@ begin
                   begin
                     case p_Ids(pm) of
                       id_p_cap    : FSteps[N].cutCap := pa.tkValue;
-                      id_p_energy : FSteps[N].CutEnergy := pa.tkValue;
+                      id_p_energy : FSteps[N].CutEnergyDischarge := pa.tkValue;
                       id_p_time   : FSteps[N].CutTime := trunc(pa.tkValue);
                       id_p_cutv   : FSteps[N].CutVolt := pa.tkValue;
                       id_p_power  : FSteps[N].TestVal := pa.tkValue;
@@ -393,7 +394,7 @@ begin
                   begin
                     case p_Ids(pm) of
                       id_p_cap    : FSteps[N].cutCap := pa.tkValue;
-                      id_p_energy : FSteps[N].CutEnergy := pa.tkValue;
+                      id_p_energy : FSteps[N].CutEnergyDischarge := pa.tkValue;
                       id_p_time   : FSteps[N].CutTime := trunc(pa.tkValue);
                       id_p_cutv   : FSteps[N].CutVolt := pa.tkValue;
                       id_p_res    : FSteps[N].TestVal := pa.tkValue;
@@ -512,6 +513,11 @@ procedure TfrmStep.memStepStatusChange(Sender: TObject;
   Changes: TSynStatusChanges);
 begin
   lblXY.Caption := format('%d: %d',[MemStep.CaretX,MemStep.CaretY]);
+end;
+
+procedure TfrmStep.lblXYClick(Sender: TObject);
+begin
+
 end;
 
 procedure TfrmStep.edtDeviceChange(Sender: TObject);

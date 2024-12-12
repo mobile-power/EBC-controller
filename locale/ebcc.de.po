@@ -482,34 +482,6 @@ msgstr "Nicht gespeichert"
 msgid "Wait time in seconds:"
 msgstr "Wartezeit in Sekunden:"
 
-#: tfrmabout.button1.caption
-msgctxt "tfrmabout.button1.caption"
-msgid "Ok"
-msgstr "Ok"
-
-#: tfrmabout.caption
-msgid "About"
-msgstr "Über"
-
-#: tfrmconnect.cancelbutton.caption
-msgctxt "tfrmconnect.cancelbutton.caption"
-msgid "Cancel"
-msgstr "Abbrechen"
-
-#: tfrmconnect.caption
-msgctxt "tfrmconnect.caption"
-msgid "Connect"
-msgstr "Verbinden"
-
-#: tfrmconnect.devicelabel.caption
-msgid "&Device"
-msgstr "&Port"
-
-#: tfrmconnect.okbutton.caption
-msgctxt "tfrmconnect.okbutton.caption"
-msgid "Ok"
-msgstr "Ok"
-
 #: tfrmmain.btnadjust.caption
 msgid "Adjust"
 msgstr "Anpassen"
@@ -697,8 +669,10 @@ msgid "WH"
 msgstr "WH"
 
 #: tfrmmain.memsteplog.columns[4].title.caption
+#, fuzzy
+#| msgid "Time"
 msgctxt "tfrmmain.memsteplog.columns[4].title.caption"
-msgid "Time"
+msgid "Duration"
 msgstr "Zeit"
 
 #: tfrmmain.memsteplog.columns[5].title.caption
@@ -712,6 +686,14 @@ msgstr "Endspannung"
 #: tfrmmain.memsteplog.columns[7].title.caption
 msgid "End current"
 msgstr "Endstrom"
+
+#: tfrmmain.memsteplog.columns[8].title.caption
+msgid "Start time"
+msgstr ""
+
+#: tfrmmain.memsteplog.columns[9].title.caption
+msgid "End time"
+msgstr ""
 
 #: tfrmmain.mmm_data.caption
 msgid "D&ata"
@@ -874,52 +856,24 @@ msgstr "Schritte"
 msgid "Steps - Ctrl F3"
 msgstr "Schritte - Strg F3"
 
-#: tfrmsettings.cancelbutton.caption
-msgctxt "tfrmsettings.cancelbutton.caption"
-msgid "Cancel"
-msgstr "Abbrechen"
-
-#: tfrmsettings.caption
-msgctxt "tfrmsettings.caption"
-msgid "Settings"
-msgstr "Einstellungen"
-
-#: tfrmsettings.cgsettings.caption
-msgid "&Misc settings"
-msgstr "&Weitere Einstellungen"
-
-#: tfrmsettings.edtinttime.editlabel.caption
-msgid "&dVdA Int. time (s)"
-msgstr "&dVdA Int. Zeit (s)"
-
-#: tfrmsettings.grpparam.caption
-msgid "Parameters"
-msgstr "Parameter"
-
-#: tfrmsettings.okbutton.caption
-msgctxt "tfrmsettings.okbutton.caption"
-msgid "&Ok"
-msgstr "&Ok"
-
-#: tfrmsettings.rgstart.caption
-msgid "&Startup behavior"
-msgstr "&Startverhalten"
-
 #: tfrmshortcuts.caption
+#, fuzzy
 msgctxt "tfrmshortcuts.caption"
 msgid "Shortcut keys"
 msgstr "Tastaturkürzel"
 
 #: tfrmstep.caption
+#, fuzzy
 msgctxt "tfrmstep.caption"
 msgid "Unsaved"
-msgstr "nicht gespeichert"
+msgstr "Nicht gespeichert"
 
 #: tfrmstep.edtdevicelabel.caption
 msgid "Devic&e:"
-msgstr "&Port:"
+msgstr ""
 
 #: tfrmstep.menuitem1.caption
+#, fuzzy
 msgctxt "tfrmstep.menuitem1.caption"
 msgid "&File"
 msgstr "&Datei"
@@ -958,38 +912,38 @@ msgstr ""
 
 #: tfrmstep.menuitem8.caption
 msgid "CC discharge"
-msgstr "Entladen Konstantstrom"
+msgstr ""
 
 #: tfrmstep.menuitem9.caption
 msgid "CP discharge"
-msgstr "Entladen Konstantleistung"
+msgstr ""
 
 #: tfrmstep.mniadd.caption
-msgctxt "tfrmstep.mniadd.caption"
 msgid "&Add"
-msgstr "&Hinzufügen"
+msgstr ""
 
 #: tfrmstep.mniexit.caption
 msgid "&Exit"
-msgstr "&Beenden"
+msgstr ""
 
 #: tfrmstep.mninew.caption
 msgid "&New"
-msgstr "&Neu"
+msgstr ""
 
 #: tfrmstep.mniopen.caption
 msgid "&Open"
-msgstr "&Öffnen"
+msgstr ""
 
 #: tfrmstep.mnisave.caption
 msgid "&Save"
-msgstr "&Speichern"
+msgstr ""
 
 #: tfrmstep.mnisaveas.caption
 msgid "Save &As..."
-msgstr "Speichern &unter..."
+msgstr ""
 
 #: tfrmstep.okbutton.caption
+#, fuzzy
 msgctxt "tfrmstep.okbutton.caption"
 msgid "&Ok"
 msgstr "&Ok"
