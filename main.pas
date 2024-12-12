@@ -927,7 +927,7 @@ begin
                   EBCBreak; // Stop the discharge process
           end;
       end;
-      end;
+    end;
     stText[cstTime].Caption := MyTimeToStr(T);
 
     if FLastI <> 0 then
