@@ -127,6 +127,7 @@ msgid ""
 msgstr ""
 
 #: main.ccurrent
+msgctxt "main.ccurrent"
 msgid "Current"
 msgstr ""
 
@@ -472,6 +473,14 @@ msgstr ""
 msgid "Wait time in seconds:"
 msgstr ""
 
+#: tfrmabout.button1.caption
+msgid "Ok"
+msgstr ""
+
+#: tfrmabout.caption
+msgid "About"
+msgstr ""
+
 #: tfrmmain.btnadjust.caption
 msgid "Adjust"
 msgstr ""
@@ -502,7 +511,7 @@ msgid "&Start"
 msgstr ""
 
 #: tfrmmain.btnstart.hint
-msgid "Start charge,discharge or program"
+msgid "Start charge, discharge or program"
 msgstr ""
 
 #: tfrmmain.btnstop.caption
@@ -534,12 +543,26 @@ msgstr ""
 msgid "End charge/discharge after the specified energy in AH has been put into  or get from the battery"
 msgstr ""
 
-#: tfrmmain.edtcutenergy.hint
+#: tfrmmain.edtcutenergycharge.hint
+msgid "End charge after the specified energy in WH has been put into the battery"
+msgstr ""
+
+#: tfrmmain.edtcutenergydischarge.hint
+msgctxt "tfrmmain.edtcutenergydischarge.hint"
 msgid "End charge/discharge after the specified energy in WH has been put into or get from the battery"
 msgstr ""
 
 #: tfrmmain.edtdelim.text
 msgid "|"
+msgstr ""
+
+#: tfrmmain.gbcontrol.caption
+msgid "Control"
+msgstr ""
+
+#: tfrmmain.gbsettings.caption
+msgctxt "tfrmmain.gbsettings.caption"
+msgid "Settings"
 msgstr ""
 
 #: tfrmmain.gbstatus.caption
@@ -569,7 +592,7 @@ msgstr ""
 
 #: tfrmmain.lblcells.caption
 msgctxt "tfrmmain.lblcells.caption"
-msgid "Ce&lls"
+msgid "Cells"
 msgstr ""
 
 #: tfrmmain.lblchargev.caption
@@ -593,13 +616,21 @@ msgstr ""
 msgid "Cycle Number (starting at)"
 msgstr ""
 
-#: tfrmmain.lblcutenergy.caption
-msgid "Wh"
+#: tfrmmain.lblcutenergycharge.caption
+msgid ""
+"Cutoff Energy\n"
+"Charge"
 msgstr ""
 
-#: tfrmmain.lblcutenergy2.caption
-msgctxt "tfrmmain.lblcutenergy2.caption"
-msgid "Cutoff energ&y"
+#: tfrmmain.lblcutenergydischarge.caption
+msgid ""
+"Cutoff Energy\n"
+"Discharge"
+msgstr ""
+
+#: tfrmmain.lblcutenergydischargeunit.caption
+msgctxt "tfrmmain.lblcutenergydischargeunit.caption"
+msgid "Wh"
 msgstr ""
 
 #: tfrmmain.lblcutoffv1.caption
@@ -634,7 +665,7 @@ msgstr ""
 
 #: tfrmmain.lbltestval.caption
 msgctxt "tfrmmain.lbltestval.caption"
-msgid "TestVal"
+msgid "Current"
 msgstr ""
 
 #: tfrmmain.lbltimer.caption

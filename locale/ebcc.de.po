@@ -137,6 +137,7 @@ msgid ""
 msgstr "Kann %s nicht in %s kopieren"
 
 #: main.ccurrent
+msgctxt "main.ccurrent"
 msgid "Current"
 msgstr "Strom"
 
@@ -482,6 +483,14 @@ msgstr "Nicht gespeichert"
 msgid "Wait time in seconds:"
 msgstr "Wartezeit in Sekunden:"
 
+#: tfrmabout.button1.caption
+msgid "Ok"
+msgstr ""
+
+#: tfrmabout.caption
+msgid "About"
+msgstr ""
+
 #: tfrmmain.btnadjust.caption
 msgid "Adjust"
 msgstr "Anpassen"
@@ -512,7 +521,9 @@ msgid "&Start"
 msgstr "&Start"
 
 #: tfrmmain.btnstart.hint
-msgid "Start charge,discharge or program"
+#, fuzzy
+#| msgid "Start charge,discharge or program"
+msgid "Start charge, discharge or program"
 msgstr "Laden, Entladen oder Schritte starten"
 
 #: tfrmmain.btnstop.caption
@@ -544,13 +555,29 @@ msgstr "Beenden wenn der Ladestrom  den angegebenen Endstrom unterschreitet"
 msgid "End charge/discharge after the specified energy in AH has been put into  or get from the battery"
 msgstr "Laden/Entladen beenden wenn die angegebene Energie in AH erreicht ist"
 
-#: tfrmmain.edtcutenergy.hint
+#: tfrmmain.edtcutenergycharge.hint
+msgid "End charge after the specified energy in WH has been put into the battery"
+msgstr ""
+
+#: tfrmmain.edtcutenergydischarge.hint
+#, fuzzy
+msgctxt "tfrmmain.edtcutenergydischarge.hint"
 msgid "End charge/discharge after the specified energy in WH has been put into or get from the battery"
 msgstr "Laden/Entladen beenden wenn die angegebene Energie in WH erreicht ist"
 
 #: tfrmmain.edtdelim.text
 msgid "|"
 msgstr "|"
+
+#: tfrmmain.gbcontrol.caption
+msgid "Control"
+msgstr ""
+
+#: tfrmmain.gbsettings.caption
+#, fuzzy
+msgctxt "tfrmmain.gbsettings.caption"
+msgid "Settings"
+msgstr "Einstellungen"
 
 #: tfrmmain.gbstatus.caption
 msgid "Status"
@@ -578,8 +605,10 @@ msgid "CapI/EneI"
 msgstr "CapI/EneI"
 
 #: tfrmmain.lblcells.caption
+#, fuzzy
+#| msgid "Ce&lls"
 msgctxt "tfrmmain.lblcells.caption"
-msgid "Ce&lls"
+msgid "Cells"
 msgstr "Ze&llen"
 
 #: tfrmmain.lblchargev.caption
@@ -603,14 +632,23 @@ msgstr "Endkapazität"
 msgid "Cycle Number (starting at)"
 msgstr ""
 
-#: tfrmmain.lblcutenergy.caption
+#: tfrmmain.lblcutenergycharge.caption
+msgid ""
+"Cutoff Energy\n"
+"Charge"
+msgstr ""
+
+#: tfrmmain.lblcutenergydischarge.caption
+msgid ""
+"Cutoff Energy\n"
+"Discharge"
+msgstr ""
+
+#: tfrmmain.lblcutenergydischargeunit.caption
+#, fuzzy
+msgctxt "tfrmmain.lblcutenergydischargeunit.caption"
 msgid "Wh"
 msgstr "WH"
-
-#: tfrmmain.lblcutenergy2.caption
-msgctxt "tfrmmain.lblcutenergy2.caption"
-msgid "Cutoff energ&y"
-msgstr "Endenergie"
 
 #: tfrmmain.lblcutoffv1.caption
 msgid "V"
@@ -643,9 +681,10 @@ msgid "A"
 msgstr "A"
 
 #: tfrmmain.lbltestval.caption
+#, fuzzy
 msgctxt "tfrmmain.lbltestval.caption"
-msgid "TestVal"
-msgstr ""
+msgid "Current"
+msgstr "Strom"
 
 #: tfrmmain.lbltimer.caption
 msgctxt "tfrmmain.lbltimer.caption"

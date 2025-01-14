@@ -1,13 +1,13 @@
 object frmAbout: TfrmAbout
-  Left = 731
+  Left = 841
   Height = 365
-  Top = 437
+  Top = 256
   Width = 733
   Caption = 'About'
   ClientHeight = 365
   ClientWidth = 733
   OnCreate = FormCreate
-  LCLVersion = '3.0.0.2'
+  LCLVersion = '3.6.0.0'
   object TopPannel: TPanel
     Left = 2
     Height = 315
