@@ -1016,7 +1016,7 @@ begin
 
     // AutoOff check
     if (not (FRunMode in [rmNone, rmMonitor, rmWait, rmLoop])) and
-       ((APacket[2] = FPackets[FPacketIndex].AutoOff) or ((FSampleCounter > 10) and (FLastI < 0.0001)) or (FLastU < 1.50) or (FLastU > 4.25)) and
+       ((APacket[2] = FPackets[FPacketIndex].AutoOff) or ((FSampleCounter > 10) and (FLastI < 0.0001)) or (FLastU < 0.50) or (FLastU > 4.25)) and
        not FLoadStepBusy
     then
     begin
@@ -1029,7 +1029,7 @@ begin
         ));
         if (FSampleCounter < 300) and // If the CHG/DSG cycle is still in the first 10 seconds, the Ah counter should not have had time to increment significantly
            (MyFloatStr(FCurrentCapacity[caEBC]) = FindLastAhReadingInMemLog(memStepLog)) and
-           ((FLastU > 1.50) or (FLastU < 4.25)) // The current reading hasn't changed since the last CHG/DSG step
+           ((FLastU > 0.50) or (FLastU < 4.25)) // The current reading hasn't changed since the last CHG/DSG step
         then
         begin
             // Retry the charge/discharge, the EBC probably failed to do it. The EBCBreak call below will kick off this command.
@@ -1041,7 +1041,7 @@ begin
     end;
 
     // print statement in serial logs/console window for when the voltage goes out of bounds
-    if (FLastU < 1.50) or (FLastU > 4.25) // EBC can't go below 1.50V (changed from 2.45V to account for Na+ cells) or above 4.25V
+    if (FLastU < 0.50) or (FLastU > 4.25) // EBC can't go below 0.50V (changed from 2.45V to account for Na+ cells) or above 4.25V
     then
     begin
       DoLog(format('%s Voltage out of bounds: FlastU = %s', [FormatDateTimeISO8601(Now()), MyFloatStr(FLastU)]));

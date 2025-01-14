@@ -20,6 +20,8 @@
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="7"/>
+        <TopLine Value="1040"/>
+        <CursorPos X="66" Y="1044"/>
         <ExtraEditorCount Value="1"/>
         <ExtraEditor1>
           <EditorIndex Value="-1"/>
@@ -279,123 +281,122 @@
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="stepform.pas"/>
-        <Caret Line="595" Column="9" TopLine="564"/>
+        <Caret Line="7" Column="11"/>
       </Position1>
       <Position2>
         <Filename Value="stepform.pas"/>
-        <Caret Line="7" Column="11"/>
+        <Caret Line="6" Column="22"/>
       </Position2>
       <Position3>
-        <Filename Value="stepform.pas"/>
-        <Caret Line="6" Column="22"/>
-      </Position3>
-      <Position4>
         <Filename Value="stepform.lfm"/>
         <Caret Line="456" Column="7" TopLine="436"/>
+      </Position3>
+      <Position4>
+        <Filename Value="main.pas"/>
+        <Caret Line="3218" Column="75" TopLine="3062"/>
       </Position4>
       <Position5>
         <Filename Value="main.pas"/>
-        <Caret Line="3218" Column="75" TopLine="3062"/>
+        <Caret Line="13" Column="43"/>
       </Position5>
       <Position6>
-        <Filename Value="main.pas"/>
-        <Caret Line="13" Column="43"/>
+        <Filename Value="ebcc.lpr"/>
+        <Caret Line="22"/>
       </Position6>
       <Position7>
-        <Filename Value="ebcc.lpr"/>
-        <Caret Line="22"/>
-      </Position7>
-      <Position8>
         <Filename Value="connectform.pas"/>
         <Caret Line="55" Column="5" TopLine="35"/>
-      </Position8>
-      <Position9>
+      </Position7>
+      <Position8>
         <Filename Value="ebcc.lpr"/>
         <Caret Line="22"/>
-      </Position9>
-      <Position10>
+      </Position8>
+      <Position9>
         <Filename Value="settings.lfm"/>
         <Caret Line="82" Column="26" TopLine="65"/>
+      </Position9>
+      <Position10>
+        <Filename Value="ebcc.lpr"/>
+        <Caret Line="16" Column="15"/>
       </Position10>
       <Position11>
         <Filename Value="ebcc.lpr"/>
-        <Caret Line="16" Column="15"/>
+        <Caret Line="19" Column="60"/>
       </Position11>
       <Position12>
         <Filename Value="ebcc.lpr"/>
-        <Caret Line="19" Column="60"/>
+        <Caret Line="22" Column="50"/>
       </Position12>
       <Position13>
-        <Filename Value="ebcc.lpr"/>
-        <Caret Line="22" Column="50"/>
-      </Position13>
-      <Position14>
         <Filename Value="../../../../../lazarus/fpc/3.2.2/source/rtl/objpas/fgl.pp"/>
         <Caret Line="930" TopLine="910"/>
-      </Position14>
-      <Position15>
+      </Position13>
+      <Position14>
         <Filename Value="../../../../../lazarus/components/synedit/synpluginmulticaret.pp"/>
         <Caret Line="764" Column="30" TopLine="733"/>
-      </Position15>
-      <Position16>
+      </Position14>
+      <Position15>
         <Filename Value="ebcc.lpr"/>
         <Caret Line="22"/>
+      </Position15>
+      <Position16>
+        <Filename Value="main.pas"/>
+        <Caret Line="325" Column="51" TopLine="317"/>
       </Position16>
       <Position17>
         <Filename Value="main.pas"/>
-        <Caret Line="325" Column="51" TopLine="317"/>
+        <Caret Line="1021" Column="112" TopLine="1007"/>
       </Position17>
       <Position18>
         <Filename Value="main.pas"/>
-        <Caret Line="1021" Column="112" TopLine="1007"/>
+        <Caret Line="1032" Column="46" TopLine="1007"/>
       </Position18>
       <Position19>
         <Filename Value="main.pas"/>
-        <Caret Line="1032" Column="46" TopLine="1007"/>
+        <Caret Line="1040" Column="57" TopLine="1011"/>
       </Position19>
       <Position20>
         <Filename Value="main.pas"/>
-        <Caret Line="1040" Column="57" TopLine="1011"/>
+        <Caret Line="1044" Column="84" TopLine="1011"/>
       </Position20>
       <Position21>
         <Filename Value="main.pas"/>
-        <Caret Line="1044" Column="84" TopLine="1011"/>
+        <Caret Line="1019" Column="140" TopLine="1011"/>
       </Position21>
       <Position22>
         <Filename Value="main.pas"/>
-        <Caret Line="1019" Column="140" TopLine="1011"/>
+        <Caret Line="1032" Column="46" TopLine="1011"/>
       </Position22>
       <Position23>
         <Filename Value="main.pas"/>
-        <Caret Line="1032" Column="46" TopLine="1011"/>
+        <Caret Line="1021" Column="104" TopLine="1011"/>
       </Position23>
       <Position24>
         <Filename Value="main.pas"/>
-        <Caret Line="1021" Column="104" TopLine="1011"/>
+        <Caret Line="1044" Column="69" TopLine="1011"/>
       </Position24>
       <Position25>
         <Filename Value="main.pas"/>
-        <Caret Line="1044" Column="69" TopLine="1011"/>
+        <Caret Line="1019" Column="121" TopLine="1011"/>
       </Position25>
       <Position26>
         <Filename Value="main.pas"/>
-        <Caret Line="1019" Column="121" TopLine="1011"/>
+        <Caret Line="1044" Column="69" TopLine="1011"/>
       </Position26>
       <Position27>
         <Filename Value="main.pas"/>
-        <Caret Line="1044" Column="69" TopLine="1011"/>
+        <Caret Line="1190" Column="75" TopLine="1182"/>
       </Position27>
       <Position28>
         <Filename Value="main.pas"/>
-        <Caret Line="1190" Column="75" TopLine="1182"/>
+        <Caret Line="1043" Column="93" TopLine="1023"/>
       </Position28>
       <Position29>
         <Filename Value="main.pas"/>
-        <Caret Line="1043" Column="93" TopLine="1023"/>
+        <Caret Line="1047" Column="45" TopLine="1023"/>
       </Position29>
       <Position30>
         <Filename Value="main.pas"/>
-        <Caret Line="1047" Column="45" TopLine="1023"/>
       </Position30>
     </JumpHistory>
     <RunParams>
