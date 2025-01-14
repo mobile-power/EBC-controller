@@ -1,22 +1,22 @@
 object frmMain: TfrmMain
-  Left = 828
+  Left = 2000
   Height = 698
-  Top = 7
+  Top = 187
   Width = 1723
   Anchors = []
   Caption = 'EBC_controller'
-  ClientHeight = 678
+  ClientHeight = 698
   ClientWidth = 1723
   KeyPreview = True
   Menu = MainMenu
   OnClose = FormClose
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
-  LCLVersion = '2.2.6.0'
+  LCLVersion = '3.6.0.0'
   object MainStatusBar: TStatusBar
     Left = 0
     Height = 23
-    Top = 655
+    Top = 675
     Width = 1723
     Panels = <    
       item
@@ -45,18 +45,18 @@ object frmMain: TfrmMain
     AnchorSideRight.Control = RightPanel
     AnchorSideBottom.Control = MainStatusBar
     Left = 14
-    Height = 655
+    Height = 675
     Top = 0
     Width = 1410
     Anchors = [akTop, akLeft, akRight, akBottom]
-    ClientHeight = 655
+    ClientHeight = 675
     ClientWidth = 1410
     Font.Height = -13
     ParentFont = False
     TabOrder = 2
     object Chart: TChart
       Left = 1
-      Height = 405
+      Height = 425
       Top = 1
       Width = 1408
       AxisList = <      
@@ -148,7 +148,7 @@ object frmMain: TfrmMain
     object memStepLog: TStringGrid
       Left = 1
       Height = 238
-      Top = 416
+      Top = 436
       Width = 1408
       Align = alBottom
       ColCount = 10
@@ -215,75 +215,77 @@ object frmMain: TfrmMain
       Cursor = crVSplit
       Left = 1
       Height = 10
-      Top = 406
+      Top = 426
       Width = 1408
       Align = alBottom
       ResizeAnchor = akBottom
     end
   end
-
-
-
   object RightPanel: TPanel
     Left = 1424
-    Height = 657
+    Height = 677
     Top = -2
     Width = 300
     Anchors = [akTop, akRight, akBottom]
-    ClientHeight = 657
+    ClientHeight = 677
     ClientWidth = 300
     TabOrder = 1
     object gbStatus: TGroupBox
-      Align = alTop
+      Left = 1
       Height = 175
-      Anchors = [akTop, akLeft, akRight]
+      Top = 1
+      Width = 296
+      Align = alTop
       BorderSpacing.Right = 2
       Caption = 'Status'
-      TabOrder = 2
+      TabOrder = 1
     end
-
-
     object gbControl: TGroupBox
+      Left = 1
+      Height = 195
+      Top = 176
+      Width = 296
       Align = alClient
-      Caption = 'Control'
-      Anchors = [akTop, akLeft, akRight, akBottom]
       BorderSpacing.Right = 2
+      Caption = 'Control'
+      ClientHeight = 175
+      ClientWidth = 292
       TabOrder = 3
-
       object pcProgram: TPageControl
-        Align = alClient
-        Left = 8
-        Height = 100
+        Left = 0
+        Height = 175
         Hint = 'Steps: Scripted charge and discharge  cycles'
+        Top = 0
         Width = 290
         ActivePage = tsProgram
-        Anchors = [akTop, akLeft, akRight, akBottom]
+        Align = alClient
         BorderSpacing.Right = 2
         Constraints.MaxWidth = 290
         TabIndex = 2
         TabOrder = 0
         OnChange = pcProgramChange
-
         object tsCharge: TTabSheet
           Hint = 'Charge - Ctrl F1'
           Caption = 'Charge'
-          ClientHeight = 150
+          ClientHeight = 147
           ClientWidth = 282
           OnEnter = tsChargeEnter
           ParentShowHint = False
           ShowHint = True
           object rgCharge: TRadioGroup
             Left = 0
+            Height = 27
             Top = 0
-            Align = alClient
-            Anchors = [akTop, akLeft, akRight, akBottom]
             Width = 282
+            Align = alClient
             AutoFill = False
             ChildSizing.LeftRightSpacing = 6
             ChildSizing.ShrinkHorizontal = crsScaleChilds
             ChildSizing.ShrinkVertical = crsScaleChilds
             ChildSizing.Layout = cclLeftToRightThenTopToBottom
             ChildSizing.ControlsPerLine = 1
+            ClientHeight = 7
+            ClientWidth = 278
             ItemIndex = 4
             Items.Strings = (
               'NiMH - Nickel-metal Hydride'
@@ -297,11 +299,12 @@ object frmMain: TfrmMain
             TabOrder = 0
           end
           object ChargePannel: TPanel
-            Align = alBottom
+            Left = 0
             Height = 120
+            Top = 27
             Width = 282
-            Anchors = [akLeft, akRight, akBottom]
-            ClientHeight = 200
+            Align = alBottom
+            ClientHeight = 120
             ClientWidth = 282
             Constraints.MaxHeight = 120
             Constraints.MinHeight = 120
@@ -394,19 +397,17 @@ object frmMain: TfrmMain
         object tsDischarge: TTabSheet
           Hint = 'Discharge - Ctrl F2'
           Caption = 'Discharge'
-          ClientHeight = 222
+          ClientHeight = 147
           ClientWidth = 282
           OnEnter = tsDischargeEnter
           ParentShowHint = False
           ShowHint = True
           object rgDischarge: TRadioGroup
-            Align = alClient
             Left = 0
-            Top = 0
-            Anchors = [akTop, akLeft, akRight, akBottom]
-            Height = 171
+            Height = 76
             Top = 0
             Width = 282
+            Align = alClient
             AutoFill = False
             BorderSpacing.Bottom = 1
             ChildSizing.LeftRightSpacing = 6
@@ -414,7 +415,7 @@ object frmMain: TfrmMain
             ChildSizing.ShrinkVertical = crsScaleChilds
             ChildSizing.Layout = cclLeftToRightThenTopToBottom
             ChildSizing.ControlsPerLine = 1
-            ClientHeight = 171
+            ClientHeight = 56
             ClientWidth = 278
             ItemIndex = 0
             Items.Strings = (
@@ -426,11 +427,13 @@ object frmMain: TfrmMain
             TabOrder = 0
           end
           object DischargePanel: TPanel
-            Align = alBottom
+            Left = 0
             Height = 70
-            Anchors = [akLeft, akRight, akBottom]
+            Top = 77
+            Width = 282
+            Align = alBottom
             ClientHeight = 70
-            ClientWidth = 280
+            ClientWidth = 282
             Constraints.MaxHeight = 120
             Constraints.MinHeight = 70
             TabOrder = 1
@@ -467,7 +470,7 @@ object frmMain: TfrmMain
         object tsProgram: TTabSheet
           Hint = 'Steps - Ctrl F3'
           Caption = 'Steps'
-          ClientHeight = 212
+          ClientHeight = 147
           ClientWidth = 282
           OnContextPopup = tsProgramContextPopup
           ParentShowHint = False
@@ -487,10 +490,10 @@ object frmMain: TfrmMain
             Top = 160
             Width = 168
             Caption = 'Edit...'
-            OnClick = btnProgClick
             ParentShowHint = False
             ShowHint = True
             TabOrder = 3
+            OnClick = btnProgClick
           end
           object lblStep: TLabel
             Left = 199
@@ -544,10 +547,10 @@ object frmMain: TfrmMain
             Width = 168
             Caption = 'Skip step'
             Enabled = False
-            OnClick = btnSkipClick
             ParentShowHint = False
             ShowHint = True
             TabOrder = 2
+            OnClick = btnSkipClick
           end
           object lblTimer: TLabel
             Left = 8
@@ -563,9 +566,9 @@ object frmMain: TfrmMain
             Top = 44
             Width = 100
             MaxLength = 2
-            OnChange = edtDelimChange
             TabOrder = 1
             Text = '|'
+            OnChange = edtDelimChange
           end
           object Label2: TLabel
             Left = 7
@@ -608,7 +611,7 @@ object frmMain: TfrmMain
         object tsConsole: TTabSheet
           Hint = 'Console - Ctrl F4'
           Caption = 'Console'
-          ClientHeight = 222
+          ClientHeight = 147
           ClientWidth = 282
           ParentShowHint = False
           ShowHint = True
@@ -618,7 +621,7 @@ object frmMain: TfrmMain
             AnchorSideRight.Control = tsConsole
             AnchorSideRight.Side = asrBottom
             Left = 0
-            Height = 215
+            Height = 140
             Top = 0
             Width = 282
             Anchors = [akTop, akLeft, akRight, akBottom]
@@ -631,42 +634,34 @@ object frmMain: TfrmMain
         end
       end
     end
-
-
-
-
-
-
     object SplitterSettings: TSplitter
-      Align = alBottom
       Cursor = crVSplit
+      Left = 1
       Height = 5
+      Top = 371
+      Width = 298
+      Align = alBottom
       ResizeAnchor = akBottom
     end
-
-
-
-
-
-
-
-
     object gbSettings: TGroupBox
       AnchorSideTop.Control = SplitterSettings
       AnchorSideTop.Side = asrBottom
-      Align = alBottom
+      Left = 1
       Height = 300
-      Anchors = [akLeft, akRight, akBottom]
+      Top = 376
+      Width = 296
+      Align = alBottom
       BorderSpacing.Right = 2
       Caption = 'Settings'
-      TabOrder = 1
-
+      ClientHeight = 280
+      ClientWidth = 292
+      TabOrder = 0
       object lblTestVal: TLabel
         AnchorSideTop.Control = gbSettings
         Left = 11
         Height = 15
         Top = 0
-        Width = 35
+        Width = 40
         Caption = 'Current'
         FocusControl = edtTestVal
         ParentColor = False
@@ -681,8 +676,6 @@ object frmMain: TfrmMain
         ParentColor = False
         ParentFont = False
       end
-
-
       object edtTestVal: TFloatSpinEdit
         Left = 11
         Height = 23
@@ -694,7 +687,6 @@ object frmMain: TfrmMain
         ShowHint = True
         TabOrder = 0
       end
-
       object lblCutTime: TLabel
         Left = 142
         Height = 15
@@ -704,7 +696,6 @@ object frmMain: TfrmMain
         FocusControl = edtCutTime
         ParentColor = False
       end
-
       object edtCutTime: TSpinEdit
         Left = 141
         Height = 23
@@ -715,17 +706,15 @@ object frmMain: TfrmMain
         ShowHint = True
         TabOrder = 1
       end
-
       object lblCutEnergyDischarge: TLabel
         Left = 11
-        Height = 15
+        Height = 30
         Top = 54
         Width = 73
         Caption = 'Cutoff Energy'#13#10'Discharge'
         FocusControl = edtCutEnergyDischarge
         ParentColor = False
       end
-
       object edtCutEnergyDischarge: TFloatSpinEdit
         Left = 11
         Height = 23
@@ -736,7 +725,6 @@ object frmMain: TfrmMain
         ShowHint = True
         TabOrder = 4
       end
-
       object lblCutEnergyDischargeUnit: TLabel
         Left = 108
         Height = 15
@@ -746,19 +734,17 @@ object frmMain: TfrmMain
         Enabled = False
         ParentColor = False
       end
-
       object chkCutEnergyDischarge: TCheckBox
         Left = 109
-        Height = 19
+        Height = 17
         Top = 54
-        Width = 20
+        Width = 18
         Font.Height = -16
         Font.Name = 'Sans'
-        OnChange = chkCutEnergyDischargeChange
         ParentFont = False
         TabOrder = 2
+        OnChange = chkCutEnergyDischargeChange
       end
-
       object lblCutCap2: TLabel
         Left = 142
         Height = 15
@@ -768,9 +754,8 @@ object frmMain: TfrmMain
         FocusControl = edtCutCap
         ParentColor = False
       end
-
       object edtCutCap: TFloatSpinEdit
-        Left = 142
+        Left = 137
         Height = 23
         Hint = 'End charge/discharge after the specified energy in AH has been put into  or get from the battery'
         Top = 85
@@ -781,7 +766,6 @@ object frmMain: TfrmMain
         ShowHint = True
         TabOrder = 5
       end
-
       object lblCutCap: TLabel
         Left = 255
         Height = 15
@@ -791,29 +775,26 @@ object frmMain: TfrmMain
         Enabled = False
         ParentColor = False
       end
-
       object chkCutCap: TCheckBox
         Left = 260
-        Height = 19
+        Height = 17
         Top = 54
-        Width = 20
+        Width = 18
         Font.Height = -16
         Font.Name = 'Sans'
-        OnChange = chkCutCapChange
         ParentFont = False
         TabOrder = 3
+        OnChange = chkCutCapChange
       end
-
       object lblCutEnergyCharge: TLabel
         Left = 11
-        Height = 15
+        Height = 30
         Top = 122
         Width = 73
         Caption = 'Cutoff Energy'#13#10'Charge'
         FocusControl = edtCutEnergyCharge
         ParentColor = False
       end
-
       object edtCutEnergyCharge: TFloatSpinEdit
         Left = 11
         Height = 23
@@ -824,19 +805,17 @@ object frmMain: TfrmMain
         ShowHint = True
         TabOrder = 12
       end
-
       object chkCutEnergyCharge: TCheckBox
         Left = 109
-        Height = 19
+        Height = 17
         Top = 122
-        Width = 20
+        Width = 18
         Font.Height = -16
         Font.Name = 'Sans'
-        OnChange = chkCutEnergyChargeChange
         ParentFont = False
         TabOrder = 11
+        OnChange = chkCutEnergyChargeChange
       end
-
       object btnStart: TButton
         Left = 11
         Height = 26
@@ -845,20 +824,18 @@ object frmMain: TfrmMain
         Width = 78
         Caption = '&Start'
         Enabled = False
-        OnClick = btnStartClick
         TabOrder = 6
+        OnClick = btnStartClick
       end
-
       object btnStop: TButton
         Left = 88
         Height = 26
         Top = 190
         Width = 78
         Caption = 'St&op'
-        OnClick = btnStopClick
         TabOrder = 7
+        OnClick = btnStopClick
       end
-
       object btnCont: TButton
         Left = 11
         Height = 26
@@ -866,10 +843,9 @@ object frmMain: TfrmMain
         Width = 78
         Caption = 'Cont'
         Enabled = False
-        OnClick = btnContClick
         TabOrder = 9
+        OnClick = btnContClick
       end
-
       object btnAdjust: TButton
         Left = 88
         Height = 26
@@ -877,10 +853,9 @@ object frmMain: TfrmMain
         Width = 78
         Caption = 'Adjust'
         Enabled = False
-        OnClick = btnAdjustClick
         TabOrder = 10
+        OnClick = btnAdjustClick
       end
-
       object tbxMonitor: TToggleBox
         Left = 176
         Height = 52
@@ -889,17 +864,13 @@ object frmMain: TfrmMain
         Width = 110
         Caption = '&Monitor'
         Enabled = False
-        OnChange = tbxMonitorChange
         ParentShowHint = False
         ShowHint = True
         TabOrder = 8
+        OnChange = tbxMonitorChange
       end
     end
-
   end
-
-
-
   object DateTimeIntervalChartSource: TDateTimeIntervalChartSource
     DateTimeFormat = 'yyyy-mm-dd HH:MM:SS'
     Steps = [dtsHour, dtsMinute, dtsSecond]

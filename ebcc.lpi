@@ -31,7 +31,7 @@
     <MacroValues Count="1">
       <Macro1 Name="LCLWidgetType" Value="gtk2"/>
     </MacroValues>
-    <BuildModes Count="7">
+    <BuildModes Count="8">
       <Item1 Name="Default" Default="True"/>
       <Item2 Name="Debug">
         <MacroValues Count="1">
@@ -179,26 +179,13 @@
             <IncludeFiles Value="$(ProjOutDir)"/>
             <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
-          <Parsing>
-            <SyntaxOptions>
-              <IncludeAssertionCode Value="True"/>
-            </SyntaxOptions>
-          </Parsing>
           <CodeGeneration>
-            <Checks>
-              <IOChecks Value="True"/>
-              <RangeChecks Value="True"/>
-              <OverflowChecks Value="True"/>
-              <StackChecks Value="True"/>
-            </Checks>
-            <VerifyObjMethodCallValidity Value="True"/>
             <TargetOS Value="win64"/>
           </CodeGeneration>
           <Linking>
             <Debugging>
-              <DebugInfoType Value="dsDwarf2"/>
-              <UseHeaptrc Value="True"/>
-              <TrashVariables Value="True"/>
+              <RunWithoutDebug Value="True"/>
+              <DebugInfoType Value="dsDwarf2Set"/>
             </Debugging>
             <Options>
               <Win32>
@@ -311,9 +298,62 @@
           </Other>
         </CompilerOptions>
       </Item7>
+      <Item8 Name="Win32">
+        <MacroValues Count="1">
+          <Macro2 Name="LCLWidgetType" Value="win32"/>
+        </MacroValues>
+        <CompilerOptions>
+          <Version Value="11"/>
+          <Target>
+            <Filename Value="ebcc32.exe"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir)"/>
+            <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <IncludeAssertionCode Value="True"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <Checks>
+              <OverflowChecks Value="True"/>
+              <StackChecks Value="True"/>
+            </Checks>
+            <VerifyObjMethodCallValidity Value="True"/>
+            <TargetProcessor Value="80386"/>
+            <TargetCPU Value="i386"/>
+            <TargetOS Value="win32"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <DebugInfoType Value="dsDwarf2"/>
+              <GenGProfCode Value="True"/>
+              <StripSymbols Value="True"/>
+              <UseExternalDbgSyms Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+            </Options>
+          </Linking>
+          <Other>
+            <Verbosity>
+              <ShowUsedFiles Value="True"/>
+              <ShowHintsForUnusedUnitsInMainSrc Value="True"/>
+            </Verbosity>
+            <CompilerMessages>
+              <IgnoredMessages idx5024="True"/>
+            </CompilerMessages>
+          </Other>
+        </CompilerOptions>
+      </Item8>
       <SharedMatrixOptions Count="5">
         <Item1 ID="916243471522" Modes="Release,Default,Debug" Type="IDEMacro" MacroName="LCLWidgetType" Value="gtk2"/>
-        <Item2 ID="408799828927" Modes="Win64-Release,Win64-Debug" Type="IDEMacro" MacroName="LCLWidgetType" Value="win32"/>
+        <Item2 ID="408799828927" Modes="Win64-Release,Win64-Debug,Win32" Type="IDEMacro" MacroName="LCLWidgetType" Value="win32"/>
         <Item3 ID="394071792229" Type="IDEMacro" MacroName="LCLWidgetType" Value="qt6"/>
         <Item4 ID="207730535382" Modes="Debug-QT" Type="IDEMacro" MacroName="LCLWidgetType" Value="qt5"/>
         <Item5 ID="732137239923" Modes="Debug-GTK3" Type="IDEMacro" MacroName="LCLWidgetType" Value="gtk3"/>

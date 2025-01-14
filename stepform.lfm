@@ -1,7 +1,7 @@
 object frmStep: TfrmStep
-  Left = 415
+  Left = 396
   Height = 557
-  Top = 283
+  Top = 135
   Width = 994
   BorderIcons = [biSystemMenu]
   Caption = 'Unsaved'
@@ -10,7 +10,7 @@ object frmStep: TfrmStep
   Menu = MainMenu1
   OnCreate = FormCreate
   Position = poDefault
-  LCLVersion = '3.4.0.0'
+  LCLVersion = '3.6.0.0'
   inline memStep: TSynEdit
     Left = 5
     Height = 334
